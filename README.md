@@ -1,3 +1,1 @@
-Uploading from Mac*
-Updated from linux*
-MOre of a change*
+Will write stories and focus on basic framework soon.
