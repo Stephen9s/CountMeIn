@@ -8,28 +8,23 @@
 </head>
 <!-- START_HIGHLIGHT -->
 <body class='<%= controller.controller_name %>'>
+<div id="container">
 	<div id="banner">
 		<%= @page_title || "Count Me In!" %>
 	</div>
-	<div id="columns">
-		<div id="side">
-			<ul>
-				<li><%= link_to "Home", home_path %></li>
-				<% if session[:user_id].nil? %>
-
-				<% else %>
-					<li><%= link_to "View your Profile", profile_path %></li>
-					<li><%= link_to "Search for Friends", search_path %></li>
-					<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
-				<% end %>
-			</ul>
-			<div class="time">
-				<%= Time.now.to_s(:db) %><br>
-			</div>
-		</div>
-		<div id="main">
-			<%= yield %>
-		</div>
+	<ul id="menu">
+		<li><span></span><%= link_to "Home", home_path %></li>
+		<% if session[:user_id] %>
+			<li><span></span><%= link_to "Profile", profile_path %></li>
+			<li><span></span><%= link_to "Search", search_path %></li>
+			<li><span></span><%= link_to "Settings", search_path %></li>
+			<li><span></span><%= link_to "Log out", :controller => 'sessions', :action => 'logout' %></li>
+		<% end %>
+	</ul>
+	<div id="main">
+		<%= yield %>
 	</div>
+	<div id="footer"></div>
+</div>
 </body>
 </html>
