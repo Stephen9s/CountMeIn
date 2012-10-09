@@ -23,4 +23,13 @@ class UsersController < ApplicationController
     end
     
   end
+  
+  def search
+    if params[:search]
+      @results = User.find(:all, :conditions => ['username LIKE ?', "%#{params[:search]}%"])
+    else
+      @results = []
+    end
+  end
+  
 end

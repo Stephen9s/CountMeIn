@@ -13,6 +13,7 @@ CountMeIn::Application.routes.draw do
   resources :users
   get "users/new"
   match "/users/:user" => "users#create"
+  match "search" => "users#search"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
