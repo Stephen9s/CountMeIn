@@ -12,6 +12,11 @@
 <% if session[:user_id].nil? %>
 
 <% else %>
+
+	<% if params[:action] != "home" %>
+		<%= link_to "Home", home_path %>
+	<% end %>
+	
 	<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
 <% end %>
 </body>

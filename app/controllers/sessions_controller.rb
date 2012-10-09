@@ -31,6 +31,7 @@ class SessionsController < ApplicationController
   end
 
   def profile
+    @profile = User.find(session[:user_id], :select => "username, email, f_name, l_name, mobile_phone, dob, gender, description, email", :limit => 1)
   end
 
   def setting

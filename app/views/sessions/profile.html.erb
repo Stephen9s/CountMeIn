@@ -1,2 +1,7 @@
-<h1>Sessions#profile,</h1>
-<p>Find me in app/views/sessions/profile,.html.erb</p>
+<h1>Hello, <%= @profile.username %></h1>
+<p>First name: <%= @profile.f_name %></p>
+<p>Last name: <%= @profile.l_name %></p>
+<p>E-mai: <%= @profile.email %></p>
+<p>DOB: <%= @profile.dob %></p>
+<p>Gender: <% if (@profile.gender == 'M') %> Male <% elsif (@profile.gender == 'F') %> Female <% else %> Other <% end %></p>
+<p>Description: <%= @profile.description %></p>
