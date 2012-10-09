@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CountMeIn</title>
+  <title>Count Me In!</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-	
-<%= yield %>
-<% if session[:user_id].nil? %>
+<!-- START_HIGHLIGHT -->
+<body class='<%= controller.controller_name %>'>
+	<div id="banner">
+		<%= @page_title || "Count Me In!" %>
+	</div>
+	<div id="columns">
+		<div id="side">
+			<ul>
+				<li><%= link_to "Home", home_path %></li>
+				<% if session[:user_id].nil? %>
 
-<% else %>
-
-	<% if params[:action] != "home" %>
-		<%= link_to "Home", home_path %>
-	<% end %>
-	
-	<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
-<% end %>
+				<% else %>
+					<li><%= link_to "View your Profile", profile_path %></li>
+					<li><%= link_to "Search for Friends", search_path %></li>
+					<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
+				<% end %>
+			</ul>
+			<div class="time">
+				<%= Time.now.to_s(:db) %><br>
+			</div>
+		</div>
+		<div id="main">
+			<%= yield %>
+		</div>
+	</div>
 </body>
 </html>
