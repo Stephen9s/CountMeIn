@@ -15,13 +15,15 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer'
-
+  gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
+  
+  
+  gem 'bcrypt-ruby', :require => 'bcrypt'
 end
 
 gem 'jquery-rails'
-
+# gem 'calendar_date_select', :git => 'git://github.com/paneq/calendar_date_select.git'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
