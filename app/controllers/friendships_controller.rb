@@ -30,6 +30,8 @@ class FriendshipsController < ApplicationController
     end
   end
   
+  # destroy shouldn't work if current_user > :id
+  # FIX!!
   def destroy
     @friendship = current_user.friendships.find(params[:id])
     @friendship.destroy
