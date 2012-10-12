@@ -1,5 +1,6 @@
 CountMeIn::Application.routes.draw do
   
+  resources :friendships
   
   root :to => "sessions#login"
   match "signup", :to => "users#new"
@@ -12,8 +13,11 @@ CountMeIn::Application.routes.draw do
 
   resources :users
   get "users/new"
+  get "users/index"
   match "/users/:user" => "users#create"
   match "search" => "users#search"
+  
+  match "/show/:id", :to => "users#show"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

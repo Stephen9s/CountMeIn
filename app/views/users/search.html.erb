@@ -5,6 +5,6 @@
  <% end %> 
 <ul>
 	<% @results.each do |result| %>
-		<li><%= result.username %></li>
+		<li><%= link_to result.username, friendships_path(:friend_id => result), :method => :post %></li>
 	<% end %>
 </ul>
