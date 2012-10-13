@@ -1,0 +1,18 @@
+<h1>Add New Events</h1>
+
+	<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
+		<p>Event Name: <%= f.text_field :name %></p>
+		<p>Start Date: <%= select_date Date.today, :prefix => :start_date %></p>
+		<p>End Date: <%= select_date Date.today, :prefix => :end_date %></p>
+		<p>Location: <%= f.text_field :location %></p>
+		<p>Public event: <%= check_box :public, 1 %></p>
+		<%= f.submit %>
+	<% end %>
+
+	<% if @event.errors.any? %>
+		<ul class="new_event_errors">
+			<% for message_error in @event.errors.full_messages %>
+			<li>* <%= message_error %></li>
+			<% end %>
+		</ul>
+	<% end %>

@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
         validates_length_of :password, :in => 6..20, :on => :create
         
         attr_accessible :username, :email, :f_name, :l_name, :gender, :mobile_phone, :description, :dob, :password, :password_confirmation
+        has_many :events 
         
         def self.authenticate(username_or_email="", login_password="")
           if EMAIL_REGEX.match(username_or_email)

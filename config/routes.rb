@@ -1,6 +1,20 @@
 CountMeIn::Application.routes.draw do
   
   
+  get "events/new"
+  post    "/events/create"
+  get "events/create"
+
+  get "events/update"
+
+  get "events/edit"
+
+  get "events/destroy"
+
+  get "events/index"
+
+  get "events/show"
+
   root :to => "sessions#login"
   match "signup", :to => "users#new"
   match "login", :to => "sessions#login"
@@ -10,6 +24,7 @@ CountMeIn::Application.routes.draw do
   match "profile", :to => "sessions#profile"
   match "setting", :to => "sessions#setting"
 
+  
   resources :users
   get "users/new"
   match "/users/:user" => "users#create"
@@ -69,5 +84,5 @@ CountMeIn::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
+   # match ':controller(/:action(/:id))(.:format)'
 end

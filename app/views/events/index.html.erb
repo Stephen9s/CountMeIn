@@ -1,0 +1,16 @@
+<h1>Event list</h1>
+<% @event.each do |event| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <td class="list_description">
+        <dl>
+          <dt>Event Name: <%= event.name %></dt>
+          <dd>Even Location: <%= event.location %></dd>
+          <dd>Start date: <%= event.start_date %></dd>
+          <dd>End date: <%= event.end_date %></dd>
+          <dd>Is public: <%= event.public %></dd>
+          <dd>Owner: <%= event.user_id %></dd>
+        </dl>
+      </td>
+    </tr>
+  <% end %>
+  </table>
