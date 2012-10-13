@@ -1,5 +1,5 @@
 <h1>Add New Event</h1>
-<%= link_to :controller => 'events', :action => 'index' %>
+<%= link_to "View events", :controller => 'events', :action => 'index' %>
 	<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
 		<p>Event Name: <%= f.text_field :name %></p>
 		<p>Start Date: <%= f.text_field :start_date %></p>
