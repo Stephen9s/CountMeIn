@@ -31,6 +31,8 @@ class EventsController < ApplicationController
   def index
     @event = Event.all
     @event.delete_if {|x| x.public == 0}
+#   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
+# => apprflag <> 0', session[:searchstr])
 
     respond_to do |format|
       format.html # index.html.erb
