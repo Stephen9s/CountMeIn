@@ -10,15 +10,8 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     
     if @event.save
-      flash[:notice] = "Event successfull created!"
-      flash[:color] = "valid"
-      
-      # if created, then don't ask them to create another one...
-      # redirect to login
       redirect_to :controller => 'events', :action => 'index'
     else
-      flash[:notice] = "Form is invalid"
-      flash[:color] = "invalid"
       render "new"
     end
   end
@@ -27,18 +20,17 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @event = Event.find(params[:id])
   end
 
   def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
   end
 
   def index
     @event = Event.all
-    @event.each do |event|
-      if event.public?
-        @event = @event.to_a.pop event
-      end
-    end
+    @event.delete_if {|x| x.public == 0}
 
     respond_to do |format|
       format.html # index.html.erb
