@@ -8,6 +8,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
+    @event.user_id = current_user
     
     if @event.save
       redirect_to :controller => 'events', :action => 'index'
@@ -31,6 +32,8 @@ class EventsController < ApplicationController
   def index
     @event = Event.all
     @event.delete_if {|x| x.public == 0}
+    # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all
+
 #   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
 # => apprflag <> 0', session[:searchstr])
 
