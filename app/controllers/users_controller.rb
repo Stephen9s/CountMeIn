@@ -27,9 +27,9 @@ class UsersController < ApplicationController
   
   def search
     if params[:search]
-      @results = User.find(:all, :conditions => ['f_name || l_name || username LIKE ?', "%#{params[:search.downcase]}%"])
+      @users = User.find(:all, :select => 'username, f_name, l_name', :conditions => ['f_name || l_name || username LIKE ?', "%#{params[:search.downcase]}%"])
     else
-      @results = []
+      @users = nil
     end
         
   end
