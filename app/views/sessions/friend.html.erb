@@ -1,0 +1,93 @@
+<% if flash[:notice] %>
+      <p class="notice">
+      	<%= flash[:notice] %>
+      </p>
+<% end %>
+
+<% if !@friends.nil? %>
+<div>
+	<h1>Friend Lists</h1>
+	
+	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			<td width="70%"></td>
+			<td width="30%"></td>
+		</tr>
+		<% @friends.each do |friend| %>
+			<tr>
+				<td><%= friend.f_name %></td>
+				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => friend.id), :method => :delete %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>
+
+<% if !@requests.nil? %>
+<div>
+	<h1>Friend Requests</h1>
+	
+	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			<td width="50%"></td>
+			<td width="25%"></td>
+			<td width="25%"></td>
+		</tr>
+		<% @requests.each do |request| %>
+			<tr>
+				<td><%= request.f_name %></td>
+				<td align="center"><%= link_to "Except", friendships_path(:friend_id => request.id), :method => :put %></td>
+				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => request.id), :method => :delete %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>
+
+<% if !@waits.nil? %>
+<div>
+	<h1>Friend Waiting</h1>
+	
+	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			<td width="70%"></td>
+			<td width="30%"></td>
+		</tr>
+		<% @waits.each do |wait| %>
+			<tr>
+				<td><%= wait.f_name %></td>
+				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => wait.id), :method => :delete %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>
+
+<div id="search">
+	<h1>Search Users</h1>
+	<%= form_tag :controller => 'sessions', :action => 'friend' do %>
+		<%= text_field_tag :search, params[:search], :id => 'search_field' %>
+		<%= submit_tag "Search", :name => nil %> 
+	<% end %> 
+</div>
+
+<div id="list">
+<% if !@search_list.nil? %>
+	<% if @search_list.size > 0 %>
+	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			<td width="70%"></td>
+			<td width="30%"></td>
+		</tr>
+		<% @search_list.each do |user| %>
+			<tr>
+				<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %> (<%=user.id%>)</td>
+				<td align="center"><%= link_to "Add Friend", friendships_path(:friend_id => user.id), :method => :post %></td>
+			</tr>
+		<% end %>
+	</table>
+	<% else %>
+		No results
+	<% end%>
+<% end %>
+</div>

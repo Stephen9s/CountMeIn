@@ -21,6 +21,44 @@ class User < ActiveRecord::Base
         attr_accessible :username, :email, :f_name, :l_name, :gender, :mobile_phone, :description, :dob, :password, :password_confirmation
         has_many :events 
         
+        # friendship
+        has_many :friendships
+        has_many :friends, :through => :friendships
+        has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+        has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+        
+        has_many :all_friendships, :class_name => "Friendship", 
+            :finder_sql => proc{"SELECT DISTINCT id, request FROM 
+                                ( 
+                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id}
+                                  UNION ALL
+                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id}
+                                )"}
+        has_many :all_friends, :class_name => "Friendship", 
+            :finder_sql => proc{"SELECT DISTINCT id FROM 
+                                ( 
+                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id} 
+                                  UNION ALL
+                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
+                                )
+                                WHERE request = 0"}
+        has_many :all_friends_requests, :class_name => "Friendship", 
+            :finder_sql => proc{"SELECT DISTINCT id FROM 
+                                ( 
+                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id} 
+                                  UNION ALL
+                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
+                                )
+                                WHERE request = id"}
+        has_many :all_friends_waits, :class_name => "Friendship", 
+            :finder_sql => proc{"SELECT DISTINCT id FROM 
+                                ( 
+                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id}
+                                  UNION ALL
+                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
+                                )
+                                WHERE request = #{id}"}
+        
         def self.authenticate(username_or_email="", login_password="")
           if EMAIL_REGEX.match(username_or_email)
             user = User.find_by_email(username_or_email)
