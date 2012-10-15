@@ -81,7 +81,7 @@
 		</tr>
 		<% @search_list.each do |user| %>
 			<tr>
-				<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %> (<%=user.id%>)</td>
+				<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %></td>
 				<td align="center"><%= link_to "Add Friend", friendships_path(:friend_id => user.id), :method => :post %></td>
 			</tr>
 		<% end %>
