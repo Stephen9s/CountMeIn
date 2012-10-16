@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
   def setting
   end
   
-  def friend
+  def friends
     @friends = User.find(@current_user.all_friends, :select => 'id, username, f_name, l_name')
     @requests = User.find(@current_user.all_friends_requests, :select => 'id, username, f_name, l_name')
     @waits = User.find(@current_user.all_friends_waits, :select => 'id, username, f_name, l_name')
