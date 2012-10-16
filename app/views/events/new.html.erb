@@ -1,11 +1,12 @@
 <h1>Add New Event</h1>
+
 <%= link_to "View events", :controller => 'events', :action => 'index' %>
 	<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
 		<p>Event Name: <%= f.text_field :name %></p>
-		<p>Start Date: <%= f.text_field :start_date %></p>
-		<p>End Date: <%= f.text_field :end_date %></p>
+		<p>Start Date: <%= f.date_select(:start_date, :order => [:day, :month, :year]) %></p>
+		<p>End Date: <%= f.date_select(:end_date, :order => [:day, :month, :year]) %></p>
 		<p>Location: <%= f.text_field :location %></p>
-		<p>Make Public: <%= check_box_tag(:public, "true") %></p>
+		<p>Make Public: <%= f.check_box(:public) %></p>
 		<%= f.submit %>
 	<% end %>
 
