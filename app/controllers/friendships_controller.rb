@@ -1,7 +1,6 @@
 class FriendshipsController < ApplicationController
   
-  before_filter :authenticate_user, :except => [:index, :login, :login_attempt, :logout]
-  before_filter :save_login_state, :only => [:index, :login, :login_attempt]
+  before_filter :authenticate_user
   
   def create
     
@@ -26,7 +25,7 @@ class FriendshipsController < ApplicationController
     if @friendship.save
       redirect_to friend_path, :notice => "Sent friend request."
     else
-      redirect_to friend_path, :notice => "Unable to send a request."
+      redirect_to friend_path, :notice => "Unable to send friend request."
       #render :action => 'new'
     end
   end
@@ -37,10 +36,10 @@ class FriendshipsController < ApplicationController
                       params[:friend_id], @current_user.id, @current_user.id, params[:friend_id]]).first
     respond_to do |format|
       if @friendship.update_attributes(:request => 0)
-        format.html { redirect_to friend_path, :notice => "Except friend." }
+        format.html { redirect_to friend_path, :notice => "Accept friend." }
         format.json { head :no_content }
       else
-        format.html { redirect_to friend_path, :notice => "Cannot except friend." }
+        format.html { redirect_to friend_path, :notice => "Cannot Accept friend." }
         format.json { render json: @friendship.errors, status: :unprocessable_entity }
       end
     end
