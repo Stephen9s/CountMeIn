@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20121014195256) do
     t.date     "end_date"
     t.string   "location"
     t.integer  "user_id"
-    t.boolean  "public"
+    t.integer  "public"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
