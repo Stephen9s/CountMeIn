@@ -43,4 +43,6 @@ class UsersController < ApplicationController
     @waits = User.find(current_user.all_friends_waits, :select => 'id, username, f_name, l_name')
   end
   
+  
+  
 end
