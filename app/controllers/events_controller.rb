@@ -48,19 +48,16 @@ class EventsController < ApplicationController
   end
 
   def index
-<<<<<<< HEAD
     @event = Event.find_all_by_public(1)
     #@event.delete_if {|x| x.public == 0}
     
     @p_event = Event.find_all_by_user_id(current_user)
     #@event = Event.find_by_public(1)
     # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
-=======
     
     @event = Event.all
     @event.delete_if {|x| x.public == 0}
     # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all
->>>>>>> 19282e7c0d8e01a96e2ee4b176b9d00abf974500
 
 #   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
 # => apprflag <> 0', session[:searchstr])
