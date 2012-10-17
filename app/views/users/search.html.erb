@@ -4,14 +4,23 @@
      <%= submit_tag "Search", :name => nil %> 
  <% end %> 
 
-<% if @users.nil? %>
-
-No results
-
-<% else %>
-<ul>
-	<% @users.each do |user| %>
-		<li><%= user.username %> | <%= user.f_name %> | <%= user.l_name %></li>
-	<% end %>
-</ul>
+<div id="list">
+<% if !@search_list.nil? %>
+	<% if @search_list.size > 0 %>
+	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			<td width="70%"></td>
+			<td width="30%"></td>
+		</tr>
+		<% @search_list.each do |user| %>
+			<tr>
+				<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %></td>
+				<td align="center"><%= link_to "Add Friend", friendships_path(:friend_id => user.id), :method => :post %></td>
+			</tr>
+		<% end %>
+	</table>
+	<% else %>
+		No results
+	<% end%>
 <% end %>
+</div>

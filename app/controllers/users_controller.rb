@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   
+  before_filter :authenticate_user, :except => [:new, :create]
   before_filter :save_login_state, :only => [:new, :create]
 
   
@@ -26,12 +27,20 @@ class UsersController < ApplicationController
   end
   
   def search
-    if params[:search]
-      @users = User.find(:all, :select => 'username, f_name, l_name', :conditions => ['f_name || l_name || username LIKE ?', "%#{params[:search.downcase]}%"])
-    else
-      @users = nil
+    @friends = User.find(current_user.all_friends, :select => 'id, username, f_name, l_name')
+    @requests = User.find(current_user.all_friends_requests, :select => 'id, username, f_name, l_name')
+    @waits = User.find(current_user.all_friends_waits, :select => 'id, username, f_name, l_name')
+    @search_list = nil
+    if !params[:search].nil? and params[:search].size > 0
+      @search_list = User.find(:all, :select => 'id, username, f_name, l_name', :conditions => ['f_name || l_name || username LIKE ? and id != ?', "%#{params[:search.downcase]}%", @current_user.id])
+      @search_list = @search_list - @friends - @requests - @waits
     end
-        
+  end
+  
+  def friends
+    @friends = User.find(current_user.all_friends, :select => 'id, username, f_name, l_name')
+    @requests = User.find(current_user.all_friends_requests, :select => 'id, username, f_name, l_name')
+    @waits = User.find(current_user.all_friends_waits, :select => 'id, username, f_name, l_name')
   end
   
 end

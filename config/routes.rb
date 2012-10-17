@@ -1,12 +1,12 @@
 CountMeIn::Application.routes.draw do
   
   
-  get "sessions/friend"
+  get "sessions/friends"
 
   resources :friendships
 
   get "events/new"
-  post    "/events/create"
+  post "/events/create"
   get "events/create"
 
   get "events/update"
@@ -29,8 +29,8 @@ CountMeIn::Application.routes.draw do
   match "setting", :to => "sessions#setting"
   
   #friendship
-  match "friend", :to => "sessions#friend", :as => "friend"
-  post "sessions/friend"
+  match "friends", :to => "sessions#friends", :as => "friends"
+  post "sessions/friends"
   post "friendships/create"
   put "friendships", :to => "friendships#edit"
   delete "friendships", :to => "friendships#delete"
