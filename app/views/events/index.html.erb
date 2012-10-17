@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+<div id="events">
+	<% if flash[:notice] %>
+      <p class="notice">
+      	<%= flash[:notice] %>
+      </p>
+    <% end %>
 <h1>Personal Event list</h1>
 <% @p_event.each do |event| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
@@ -21,6 +28,17 @@
 
 
 <h1>Public Event list</h1>
+=======
+
+	<h1>Event list</h1>
+>>>>>>> 19282e7c0d8e01a96e2ee4b176b9d00abf974500
+<div id="events">
+	<% if flash[:notice] %>
+      <p class="notice">
+      	<%= flash[:notice] %>
+      </p>
+    <% end %>
+	<h1>Event list</h1>
 <% @event.each do |event| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
       <td class="list_description">
@@ -31,8 +49,16 @@
           <dd>End date: <%= event.end_date %></dd>
           <dd>Is public: <%= event.public %></dd>
           <dd>Owner: <%= event.user_id %></dd>
+          <% if event.user_id.equal?(current_user.id) %>
+          	<dd>You own this! Delete Event?</dd>
+          <% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+            <dd>Leave event?</dd>
+          <% else %>
+          	<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
+          <% end %>
         </dl>
       </td>
     </tr>
   <% end %>
   </table>
+</div>

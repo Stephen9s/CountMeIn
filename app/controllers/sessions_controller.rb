@@ -38,14 +38,9 @@ class SessionsController < ApplicationController
   end
   
   def friends
-    @friends = User.find(@current_user.all_friends, :select => 'id, username, f_name, l_name')
-    @requests = User.find(@current_user.all_friends_requests, :select => 'id, username, f_name, l_name')
-    @waits = User.find(@current_user.all_friends_waits, :select => 'id, username, f_name, l_name')
-    @search_list = nil
-    if !params[:search].nil? and params[:search].size > 0
-      @search_list = User.find(:all, :select => 'id, username, f_name, l_name', :conditions => ['f_name || l_name || username LIKE ? and id != ?', "%#{params[:search.downcase]}%", @current_user.id])
-      @search_list = @search_list - @friends - @requests - @waits
-    end
+    @friends = current_user.all_friends + current_user.all_inverse_friends
+    @requests = current_user.all_friends_requests + current_user.all_inverse_friends_requests
+    @waits = current_user.all_friends_waits + current_user.all_inverse_friends_waits
   end
   
 end

@@ -8,10 +8,21 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
-    @event.user_id = current_user
+    @event.user_id = current_user.id
+    
+    
     
     if @event.save
-      redirect_to :controller => 'events', :action => 'index'
+      
+        event = Event.find_by_id(@event.id)
+        membership = event.memberships.build(:event_id => event.id, :user_id => current_user.id)
+        
+        if membership.save
+          redirect_to events_index_path, :notice => "Event created!"
+        else
+          redirect_to events_index_path, :notice => "Unable to create event!"
+          #render :action => 'new'
+        end
     else
       render "new"
     end
@@ -37,12 +48,19 @@ class EventsController < ApplicationController
   end
 
   def index
+<<<<<<< HEAD
     @event = Event.find_all_by_public(1)
     #@event.delete_if {|x| x.public == 0}
     
     @p_event = Event.find_all_by_user_id(current_user)
     #@event = Event.find_by_public(1)
     # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
+=======
+    
+    @event = Event.all
+    @event.delete_if {|x| x.public == 0}
+    # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all
+>>>>>>> 19282e7c0d8e01a96e2ee4b176b9d00abf974500
 
 #   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
 # => apprflag <> 0', session[:searchstr])
