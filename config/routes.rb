@@ -13,7 +13,7 @@ CountMeIn::Application.routes.draw do
 
   get "events/edit"
 
-  get "events/destroy"
+  post "events/destroy"
 
   get "events/index"
 
@@ -41,11 +41,10 @@ CountMeIn::Application.routes.draw do
   match "search" => "users#search"
   
   resources :event
-  match "event", :to => "sessions#event", :as => "event"
-  post "sessions/event"
+  match "events", :to => "events#index", :as => "events"
   post "events/create"
   put "events", :to => "events#edit"
-  delete "events", :to => "events#delete"
+  delete "events", :to => "events#destroy"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

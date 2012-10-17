@@ -26,13 +26,23 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
+    if @event.user_id = current_user.id
+      @event.destroy
+    end
+
+    respond_to do |format|
+      format.html { events_path }
+      format.xml  { head :no_content }
+    end
   end
 
   def index
-    @event = Event.all
-    @event.delete_if {|x| x.public == 0}
-    # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all
+    @event = Event.find_all_by_public(1)
+    #@event.delete_if {|x| x.public == 0}
+    
+    @p_event = Event.find_all_by_user_id(current_user)
+    #@event = Event.find_by_public(1)
+    # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
 
 #   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
 # => apprflag <> 0', session[:searchstr])
