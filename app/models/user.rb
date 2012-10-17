@@ -27,37 +27,20 @@ class User < ActiveRecord::Base
         has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
         has_many :inverse_friends, :through => :inverse_friendships, :source => :user
         
-        has_many :all_friendships, :class_name => "Friendship", 
-            :finder_sql => proc{"SELECT DISTINCT id, request FROM 
-                                ( 
-                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id}
-                                  UNION ALL
-                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id}
-                                )"}
-        has_many :all_friends, :class_name => "Friendship", 
-            :finder_sql => proc{"SELECT DISTINCT id FROM 
-                                ( 
-                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id} 
-                                  UNION ALL
-                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
-                                )
-                                WHERE request = 0"}
-        has_many :all_friends_requests, :class_name => "Friendship", 
-            :finder_sql => proc{"SELECT DISTINCT id FROM 
-                                ( 
-                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id} 
-                                  UNION ALL
-                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
-                                )
-                                WHERE request = id"}
-        has_many :all_friends_waits, :class_name => "Friendship", 
-            :finder_sql => proc{"SELECT DISTINCT id FROM 
-                                ( 
-                                  SELECT user_id AS id, request FROM friendships WHERE friend_id = #{id}
-                                  UNION ALL
-                                  SELECT friend_id AS id, request FROM friendships WHERE user_id = #{id} 
-                                )
-                                WHERE request = #{id}"}
+        has_many :all_friendships, :class_name => "Friendship", :conditions => ['request IS NULL']
+        has_many :all_friends, :through => :all_friendships, :source => :friend
+        has_many :all_inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => ['request IS NULL']
+        has_many :all_inverse_friends, :through => :all_inverse_friendships, :source => :user
+
+        has_many :all_friendships_requests, :class_name => "Friendship", :conditions => ['request = friend_id']
+        has_many :all_friends_requests, :through => :all_friendships_requests, :source => :friend
+        has_many :all_inverse_friendships_requests, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => ['request = user_id']
+        has_many :all_inverse_friends_requests, :through => :all_inverse_friendships_requests, :source => :user
+
+        has_many :all_friendships_waits, :class_name => "Friendship", :conditions => ['request = user_id']
+        has_many :all_friends_waits, :through => :all_friendships_waits, :source => :friend
+        has_many :all_inverse_friendships_waits, :class_name => "Friendship", :foreign_key => "friend_id", :conditions => ['request = friend_id']
+        has_many :all_inverse_friends_waits, :through => :all_inverse_friendships_waits, :source => :user
         
         def self.authenticate(username_or_email="", login_password="")
           if EMAIL_REGEX.match(username_or_email)
