@@ -39,6 +39,10 @@ CountMeIn::Application.routes.draw do
   get "users/new"
   match "/users/:user" => "users#create"
   match "search" => "users#search"
+  
+  resources :memberships
+  match "join" => "memberships#create"
+  post "memberships/create"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
