@@ -51,7 +51,7 @@ class EventsController < ApplicationController
     @event = Event.find_all_by_public(1)
     #@event.delete_if {|x| x.public == 0}
     
-    @p_event = Event.find_all_by_user_id(current_user)
+    @p_event = Event.find_all_by_user_id(current_user.id)
     #@event = Event.find_by_public(1)
     # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
     
