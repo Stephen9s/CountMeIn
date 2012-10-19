@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { events_path }
+      format.html { redirect_to events_index_path, :notice => "Event deleted!"}
       format.xml  { head :no_content }
     end
   end

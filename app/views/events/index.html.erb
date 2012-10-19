@@ -1,61 +1,65 @@
 <div id="events">
 	<% if flash[:notice] %>
-      <p class="notice">
-      	<%= flash[:notice] %>
-      </p>
-    <% end %>
-<h1>Personal Event list</h1>
-<% @p_event.each do |event| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-      <td class="list_description">
-        <dl>
-          <dt>Event Name: <%= event.name %></dt>
-          <dd>Even Location: <%= event.location %></dd>
-          <dd>Start date: <%= event.start_date %></dd>
-          <dd>End date: <%= event.end_date %></dd>
-          <dd>Is public: <%= event.public %></dd>
-          <dd>Owner: <%= event.user_id %></dd>
-          <%= button_to 'Edit', edit_event_path(event)  %>
-
-          <%= button_to 'Destroy', { :action => 'destroy', :id => event }, :confirm => 'Are you sure?', :post => true %></td>
-        </dl>
-      </td>
-    </tr>
-  <% end %>
-  </table>
-
-
-
-<h1>Public Event list</h1>
-
-	<h1>Event list</h1>
-<div id="events">
-	<% if flash[:notice] %>
-      <p class="notice">
-      	<%= flash[:notice] %>
-      </p>
-    <% end %>
-	<h1>Event list</h1>
-<% @event.each do |event| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-      <td class="list_description">
-        <dl>
-          <dt>Event Name: <%= event.name %></dt>
-          <dd>Even Location: <%= event.location %></dd>
-          <dd>Start date: <%= event.start_date %></dd>
-          <dd>End date: <%= event.end_date %></dd>
-          <dd>Is public: <%= event.public %></dd>
-          <dd>Owner: <%= event.user_id %></dd>
-          <% if event.user_id.equal?(current_user.id) %>
-          	<dd>You own this! Delete Event?</dd>
-          <% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-            <dd>Leave event?</dd>
-          <% else %>
-          	<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
-          <% end %>
-        </dl>
-      </td>
-    </tr>
-  <% end %>
-  </table>
+	  <p class="notice">
+	  	<%= flash[:notice] %>
+	  </p>
+	<% end %>
+	<% if @p_event.size == 0 && @event.size == 0%>
+			There are no public or private events.<br />
+		 <%= link_to "Post an event now!", post_path %>
+	<% else %>
+		<h1>Events that I Own</h1>
+		<% if @p_event.size > 0 %>
+			<table>
+				<% @p_event.each do |event| %>
+			    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+			      <td class="list_description">
+			        <dl>
+			          <dt>Event Name: <%= event.name %></dt>
+			          <dd>Even Location: <%= event.location %></dd>
+			          <dd>Start date: <%= event.start_date %></dd>
+			          <dd>End date: <%= event.end_date %></dd>
+			          <dd>Is public: <%= event.public %></dd>
+			          <dd>Owner: <%= event.user_id %></dd>
+			          <%= button_to 'Edit', edit_event_path(event)  %>
+			
+			          <%= button_to 'Destroy', { :action => 'destroy', :id => event }, :confirm => 'Are you sure?', :post => true %></td>
+			        </dl>
+			      </td>
+			    </tr>
+			  <% end %>
+			</table>
+		<% else %>
+			You don't own any events. <%= link_to "Create one now?", post_path %>
+		<% end %>
+		
+		<h1>Public Event list</h1>
+		<% if @event.size > 0 %>
+			<table>
+			<% @event.each do |event| %>
+		    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+		      <td class="list_description">
+		        <dl>
+		          <dt>Event Name: <%= event.name %></dt>
+		          <dd>Even Location: <%= event.location %></dd>
+		          <dd>Start date: <%= event.start_date %></dd>
+		          <dd>End date: <%= event.end_date %></dd>
+		          <dd>Is public: <%= event.public %></dd>
+		          <dd>Owner: <%= event.user_id %></dd>
+		          <% if event.user_id.equal?(current_user.id) %>
+		          	<dd>You own this! Delete Event?</dd>
+		          <% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+		            <dd>Leave event?</dd>
+		          <% else %>
+		          	<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
+		          <% end %>
+		        </dl>
+		      </td>
+		    </tr>
+		  <% end %>
+		  </table>
+		<% else %>
+			There are no public events.  <%= link_to "Create one now?", post_path %>
+		<% end %>
+	<% end %>
 </div>

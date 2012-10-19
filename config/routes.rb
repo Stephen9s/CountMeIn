@@ -42,9 +42,10 @@ CountMeIn::Application.routes.draw do
   
   resources :event
   match "events", :to => "events#index", :as => "events"
+  match "post" => "events#new"
   post "events/create"
   put "events", :to => "events#edit"
-  delete "events", :to => "events#destroy"
+  post "events", :to => "events#destroy"
 
   resources :memberships
   match "join" => "memberships#create"
