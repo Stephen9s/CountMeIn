@@ -1,19 +1,5 @@
 <h1>Add New Event</h1>
 
 <%= link_to "View events", events_path %>
-	<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
-		<p>Event Name: <%= f.text_field :name %></p>
-		<p>Start Date: <%= f.date_select(:start_date, :order => [:day, :month, :year]) %></p>
-		<p>End Date: <%= f.date_select(:end_date, :order => [:day, :month, :year]) %></p>
-		<p>Location: <%= f.text_field :location %></p>
-		<p>Make Public: <%= f.check_box(:public) %></p>
-		<%= f.submit %>
-	<% end %>
 
-	<% if @event.errors.any? %>
-		<ul class="new_event_errors">
-			<% for message_error in @event.errors.full_messages %>
-			<li>* <%= message_error %></li>
-			<% end %>
-		</ul>
-	<% end %>
+<%= render :partial => 'form' %>
