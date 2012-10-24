@@ -8,10 +8,21 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
-    @event.user_id = current_user
+    @event.user_id = current_user.id
+    
+    
     
     if @event.save
-      redirect_to :controller => 'events', :action => 'index'
+      
+        event = Event.find_by_id(@event.id)
+        membership = event.memberships.build(:event_id => event.id, :user_id => current_user.id)
+        
+        if membership.save
+          redirect_to events_index_path, :notice => "Event created!"
+        else
+          redirect_to events_index_path, :notice => "Unable to create event!"
+          #render :action => 'new'
+        end
     else
       render "new"
     end
@@ -26,10 +37,24 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
+    if @event.user_id = current_user.id
+      @event.destroy
+    end
+
+    respond_to do |format|
+      format.html { redirect_to events_index_path, :notice => "Event deleted!"}
+      format.xml  { head :no_content }
+    end
   end
 
   def index
+    @event = Event.find_all_by_public(1)
+    #@event.delete_if {|x| x.public == 0}
+    
+    @p_event = Event.find_all_by_user_id(current_user.id)
+    #@event = Event.find_by_public(1)
+    # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
+    
     @event = Event.all
     @event.delete_if {|x| x.public == 0}
     # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all

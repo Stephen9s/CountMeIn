@@ -8,8 +8,12 @@ class ApplicationController < ActionController::Base
         redirect_to(:controller => 'sessions', :action => 'login')
         return false
       else
-        @current_user = User.find(session[:user_id])
-        return true
+        begin
+          @current_user = User.find(session[:user_id])
+          return true
+        rescue ActiveRecord::RecordNotFound
+          redirect_to(:controller => 'sessions', :action => 'logout')
+        end
       end
     end
     
