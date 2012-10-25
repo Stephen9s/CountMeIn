@@ -18,20 +18,8 @@ body {
 #container { 
   min-height: 100%;
   height: auto;
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
-  position: relative;
-  border-left: 2px solid;
-  border-right: 2px solid;
-}
-
-#banner {
-  background: #FF5640;
-  padding: 10px;
-  border-bottom: 2px solid;
-  font: small-caps 40px/40px "Times New Roman", serif;
-  color: #A61300;
-  text-align: center;
 }
 
 #notice {
@@ -45,44 +33,29 @@ body {
 
 #menu
 {
-  float: left;
-  width: 800px;
+  width: 100%;
+  height: 50px;
   background:#333;
 }
 
-#menu ul
-{
-  margin: 0;
-  padding: 0;
-}
-
-#menu ul li
-{
-  list-style-type: none;
-  display: inline;
-}
-
-#menu li a
-{
+#menu a {
   display: block;
   float: left;
+  color: #fff;
   text-decoration: none;
-  border-right: 1px solid #fff;
-  padding: 5px 10px;
-  color:#fff;
+  padding: 0 20px;
+  line-height: 50px;
 }
 
-#menu li a:hover {
-  background:#000;
+#menu a:hover {
+  background: #000000;
+  color: #ffffff;
 }
 
 #main {
-    clear: left;
-    position: relative;
-    margin: 0 auto;
-    width: 800px;
-    padding: 1em;
-    padding-bottom: 2em;
+    position: relative; 
+    padding: 20px 50px 60px 20px;
+    background: #fff;
 }
 
 #main h3 {
@@ -92,11 +65,11 @@ body {
 
 #footer {
   background: #FF5640;
+  position: fixed;
   height: 20px;
   border-top: 2px solid;
   border-bottom: 2px solid;
   color: #A61300;
-  position: absolute;
   bottom: 0;
   width: 100%;
 }

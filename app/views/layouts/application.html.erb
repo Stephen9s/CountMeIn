@@ -9,20 +9,15 @@
 <!-- START_HIGHLIGHT -->
 <body class='<%= controller.controller_name %>'>
 <div id="container">
-	<div id="banner">
-		<%= @page_title || "Count Me In!" %>
-	</div>
 	<div id="menu">
-		<ul>
-			<li><%= link_to "Home", home_path %></li>
-				<% if session[:user_id] %>
-					<li><%= link_to "Profile", profile_path %></li>
-					<li><%= link_to "Search", search_path %></li>
-					<li><%= link_to "Friend", friends_path %></li>
-					<li><%= link_to "View Events", events_path %></li>
-					<li><%= link_to "Log out", :controller => 'sessions', :action => 'logout' %></li>
-				<% end %>
-		</ul>
+		<%= link_to "Home", home_path %>
+		<% if session[:user_id] %>
+			<%= link_to "Profile", profile_path %>
+			<%= link_to "Search", search_path %>
+			<%= link_to "Friend", friends_path %>
+			<%= link_to "View Events", events_path %>
+			<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
+		<% end %>
 	</div>
 	<div id="main">
 		<%= yield %>

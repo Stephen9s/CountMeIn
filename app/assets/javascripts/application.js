@@ -18,7 +18,8 @@
 
 $(function() {
   $("#event_start_date").datepicker({  
-            inline: true,  
+            inline: true, 
+            dateFormat: "yy-mm-dd",
             showOtherMonths: true,  
             dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],  
         });  
@@ -27,6 +28,7 @@ $(function() {
 $(function() {
   $("#event_end_date").datepicker({  
             inline: true,  
+            dateFormat: "yy-mm-dd",
             showOtherMonths: true,  
             dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],  
         });  
