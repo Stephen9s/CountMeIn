@@ -33,3 +33,9 @@ $(function() {
             dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],  
         });  
 });
+
+//$(function() {
+//  $('#search_field').autocomplete({
+//    source: '/contacts/auto_list.js'
+//  });
+//});

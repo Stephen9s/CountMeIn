@@ -1,4 +1,18 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<h1>@events#show</h1>
+<p>Find me in app/views/@events/show.html.erb</p>
 
-	<%= @event.name %>
+<dl>
+  <dt>Event Name: <%= @event.name %></dt>
+  <dd>Even Location: <%= @event.location %></dd>
+  <dd>Start date: <%= @event.start_date %></dd>
+  <dd>End date: <%= @event.end_date %></dd>
+  <dd>Is public: <%= @event.public %></dd>
+  <dd>Owner: <%= @event.user_id %></dd>
+  <% if @event.user_id.equal?(current_user.id) %>
+  	<dd>You own this! Delete event?</dd>
+  <% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+    <dd>Leave event?</dd>
+  <% else %>
+  	<dd><%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %></dd>
+  <% end %>
+</dl>

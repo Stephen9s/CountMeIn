@@ -1,4 +1,5 @@
 <h1>Search Users</h1>
+<%= javascript_include_tag "jquery.ui.core", "jquery.ui.widget", "jquery.ui.position", "jquery.ui.autocomplete" %>
 <%= form_tag :controller => 'users', :action => 'search' do %>
       <%= text_field_tag :search, params[:search], :id => 'search_field' %>
      <%= submit_tag "Search", :name => nil %> 
