@@ -21,8 +21,11 @@
 			          <dd>End date: <%= event.end_date %></dd>
 			          <dd>Is public: <%= event.public %></dd>
 			          <dd>Owner: <%= event.user_id %></dd>
-			          <%= button_to 'Edit', edit_event_path(event)  %>
-			
+			          <% if event.start_date.past?%>
+			          	<dd>This event can not be Edited becoue the start date has past</dd>
+			          <% else %>
+			          	<%= button_to 'Edit', edit_event_path(event)  %>
+					  <% end %>
 			          <%= button_to 'Destroy', { :action => 'destroy', :id => event }, :confirm => 'Are you sure?', :post => true %></td>
 			        </dl>
 			      </td>
@@ -49,7 +52,7 @@
 		          <% if event.user_id.equal?(current_user.id) %>
 		          	<dd>You own this! Delete Event?</dd>
 		          <% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-		            <dd>Leave event?</dd>
+		            <dd><td><%= link_to 'Count Me Out!', {:controller => "memberships", :action => 'destroy', :id => event.id}, :confirm => 'Are you sure?', :post => true %></td></dd>
 		          <% else %>
 		          	<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
 		          <% end %>

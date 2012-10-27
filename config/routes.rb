@@ -53,6 +53,7 @@ CountMeIn::Application.routes.draw do
   resources :memberships
   match "join" => "memberships#create"
   post "memberships/create"
+  post "memberships/destroy"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
