@@ -64,5 +64,35 @@
 		<% else %>
 			There are no public events.  <%= link_to "Create one now?", post_path %>
 		<% end %>
+		
+		<h1>Private Event List</h1>
+	<% if @private_events.size > 0 %>
+			<table>
+			<% @private_events.each do |private_event| %>
+		    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+		      <td class="list_description">
+		        <dl>
+		          <dt>Event Name: <%= private_event.name %></dt>
+		          <dd>Event ID: <%= private_event.id %></dd>
+		          <dd>Even Location: <%= private_event.location %></dd>
+		          <dd>Start date: <%= private_event.start_date %></dd>
+		          <dd>End date: <%= private_event.end_date %></dd>
+		          <dd>Is public: <%= private_event.public %></dd>
+		          <dd>Owner: <%= private_event.user_id %></dd>
+		          <% if private_event.user_id.equal?(current_user.id) %>
+		          	<dd>You own this! Delete Event?</dd>
+		          <% elsif private_event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+		            <dd><%= link_to 'Count Me Out!', leave_path(:id => private_event.id), :confirm => 'Are you sure?', :method => :post %></dd>
+		          <% else %>
+		          	<dd><%= link_to "Count Me In!", join_path(:event_id => private_event.id),:confirm => 'Are you sure?', :method => :post %></dd>
+		          <% end %>
+		        </dl>
+		      </td>
+		    </tr>
+		  <% end %>
+		  </table>
+		<% else %>
+			There are no private events.  <%= link_to "Create one now?", post_path %>
+		<% end %>
 	<% end %>
 </div>
