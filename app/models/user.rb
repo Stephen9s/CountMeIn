@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
         
         attr_accessible :username, :email, :f_name, :l_name, :gender, :mobile_phone, :description, :dob, :password, :password_confirmation
         has_many :events 
+        has_many :memberships
         
         # friendship
         has_many :friendships

@@ -69,6 +69,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    
+    @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event])
   end
   
   def search

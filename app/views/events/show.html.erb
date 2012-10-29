@@ -1,6 +1,5 @@
 <h1>@events#show</h1>
 <p>Find me in app/views/@events/show.html.erb</p>
-
 <dl>
   <dt>Event Name: <%= @event.name %></dt>
   <dd>Even Location: <%= @event.location %></dd>
@@ -16,3 +15,11 @@
   	<dd><%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %></dd>
   <% end %>
 </dl>
+
+<div id="members">
+	<h3>Members</h3><br/>
+		<% @event_memberships.each do |member| %>
+			
+			<li><%= member.l_name %>, <%= member.f_name %><% if member.user_id == current_user.id %> (<b>Owner</b>)<%end%></li>
+		<% end %>
+</div>
