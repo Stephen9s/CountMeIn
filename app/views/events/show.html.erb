@@ -16,10 +16,13 @@
   <% end %>
 </dl>
 
-<div id="members">
+<% content_for :sidebar do %>
+	<div id="members">
 	<h3>Members</h3><br/>
 		<% @event_memberships.each do |member| %>
 			
 			<li><%= member.l_name %>, <%= member.f_name %><% if member.user_id == current_user.id %> (<b>Owner</b>)<%end%></li>
 		<% end %>
-</div>
+	</div>
+<% end %>
+

@@ -16,6 +16,11 @@
 //= require jquery_ujs
 //= require_tree .
 
+$(document).ready(function(){
+    $("#main").height( $("#container").height() );
+    $("#sidebar").height( $("#main").height() );
+});​
+
 $(function() {
   $("#event_start_date").datepicker({  
             inline: true, 

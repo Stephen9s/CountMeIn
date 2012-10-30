@@ -18,11 +18,20 @@
 			<%= link_to "View Events", events_path %>
 			<%= link_to "Post Events", post_path %>
 			<%= link_to "Agenda", agenda_path %>
+			
 			<%= link_to "Log out", :controller => 'sessions', :action => 'logout' %>
 		<% end %>
 	</div>
-	<div id="main">
-		<%= yield %>
+	
+	<div id="content">
+		<div id="main"><%= yield %></div>
+		<div id="sidebar">
+			<% if content_for?(:sidebar) %>
+	 			<%= yield(:sidebar)  %>
+			<% else %>
+	 			Online Friends
+			<% end %>
+		</div>
 	</div>
 	<div id="footer"></div>
 </div>
