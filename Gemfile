@@ -26,6 +26,7 @@ gem 'jquery-rails'
 gem 'jquery_datepicker'
 gem 'jquery-ui-rails'
 gem "watu_table_builder", :require => "table_builder"
+#gem 'date_validator'
 # gem 'calendar_date_select', :git => 'git://github.com/paneq/calendar_date_select.git'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
