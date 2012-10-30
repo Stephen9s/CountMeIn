@@ -40,7 +40,8 @@ body {
 }
 
 #menu a {
-  display: block;
+  display: inline-block;
+  vertical-align: center;
   float: left;
   color: #fff;
   text-decoration: none;
@@ -89,4 +90,13 @@ body {
     width: 960px;
     height: 25px;   /* Height of the footer */
     background:#333;
+}
+#menu, .left {
+  float: left;
+}
+
+#menu, .right {
+  float: right;
+  padding-right: 5px;
+  line-height: 50px;
 }
