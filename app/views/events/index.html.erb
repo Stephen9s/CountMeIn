@@ -21,8 +21,8 @@
 			          <dd>End date: <%= event.end_date %></dd>
 			          <dd>Is public: <%= event.public %></dd>
 			          <dd>Owner: <%= event.user_id %></dd>
-			          <% if event.start_date.past?%>
-			          	<dd>This event can not be Edited becoue the start date has past</dd>
+			          <% if event.start_date.past? %>
+			          	<dd>This event can not be edited becoue the start date has past</dd>
 			          <% else %>
 			          	<%= button_to 'Edit', edit_event_path(event)  %>
 					  <% end %>

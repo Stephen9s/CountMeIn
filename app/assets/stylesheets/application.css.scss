@@ -4,8 +4,7 @@
 */
 
 html { 
-  min-height: 100%;
-  position: relative;
+  height: 100%;
 }
 
 body {
@@ -18,7 +17,7 @@ body {
 // 0u11Tw0w0w0w0 id http://colorschemedesigner.com/#
 
 #container { 
-  min-height: 100%;
+  height: 100%;
   width: 960px;
   margin: 0 auto;
 }
@@ -40,8 +39,6 @@ body {
 }
 
 #menu a {
-  display: inline-block;
-  vertical-align: center;
   float: left;
   color: #fff;
   text-decoration: none;
@@ -55,16 +52,17 @@ body {
 }
 
 #content {
-  clear: both;
   width: 100%;
-  height: 500px;
+  min-height: 100%;
+  height: 100%;
 }
 
 #main {
     float: left;
-    padding: 20px 10px 10px 20px;
+    padding: 0px 0px 20px 12px;
     background: #fff;
     width: 70%;
+    min-height: 100%;
 }
 
 #main h3 {
@@ -82,15 +80,9 @@ body {
     border-left: 1px;
     border-left-style: dotted;
     border-color: gray;
+    min-height: 100%;
 }
 
-#footer {
-    position:absolute;
-    bottom:0;
-    width: 960px;
-    height: 25px;   /* Height of the footer */
-    background:#333;
-}
 #menu, .left {
   float: left;
 }
@@ -99,4 +91,19 @@ body {
   float: right;
   padding-right: 5px;
   line-height: 50px;
+}
+
+#footer {
+  background: #333;
+  height: 20px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  color: #334;
+  position: relative;
+  bottom: 0;
+  width: 960px;
+}
+
+.clear_container {
+  clear: both;
 }
