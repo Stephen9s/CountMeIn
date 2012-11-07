@@ -1,8 +1,4 @@
-<h1>Search Users</h1>
-<%= form_tag :controller => 'users', :action => 'search' do %>
-      <%= text_field_tag :search, params[:search], :id => 'search_field' %>
-     <%= submit_tag "Search", :name => nil %> 
- <% end %> 
+<h1>Results</h1>
 
 <div id="list">
 <% if !@search_list.nil? %>

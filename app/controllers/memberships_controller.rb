@@ -14,4 +14,14 @@ class MembershipsController < ApplicationController
     end
   end
   
+  def destroy
+    @membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:id])
+    
+    if @membership.destroy
+      redirect_to events_path, :notice => "You are out!"
+    else
+      redirect_to events_path, :notice => "Can't go."
+    end
+  end
+  
 end

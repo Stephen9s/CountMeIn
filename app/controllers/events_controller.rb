@@ -10,8 +10,6 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.user_id = current_user.id
     
-    
-    
     if @event.save
       
         event = Event.find_by_id(@event.id)
@@ -51,12 +49,13 @@ class EventsController < ApplicationController
     @event = Event.find_all_by_public(1)
     #@event.delete_if {|x| x.public == 0}
     
+    # Finds all events made by the current_user
     @p_event = Event.find_all_by_user_id(current_user.id)
     #@event = Event.find_by_public(1)
     # fix later: @event = Event.where(["public = 0 OR user_id= current_user" ]).all
     
-    @event = Event.all
-    @event.delete_if {|x| x.public == 0}
+    friends = current_user.all_friends
+    @private_events = Event.find(:all, :joins => [:memberships], :conditions => ["events.public = 0 and events.user_id IN (?) AND events.user_id = memberships.user_id", friends])
     # fix later: @event = Event.where(["public = 0 OR user.id= current_user" ]).all
 
 #   change to  @temp = Mymodel.find(:all, :conditions => ['contents = ? AND
@@ -70,6 +69,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    
+    @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event])
   end
   
   def search

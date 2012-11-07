@@ -1,0 +1,17 @@
+<div id="calendar">
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% if @events_by_date[date] %>
+      <ul>
+        <% @events_by_date[date].each do |event| %>
+          <li><%= link_to event.name, :controller => "events", :action => "show", :id => event.id %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>
