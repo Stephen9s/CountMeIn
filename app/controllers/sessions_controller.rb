@@ -28,6 +28,13 @@ class SessionsController < ApplicationController
   end
 
   def home
+    friends = current_user.all_friends + current_user.all_inverse_friends
+    friends_id = Array.new
+    friends_id << current_user.id
+    friends.each do |friend|
+      friends_id << friend.id
+    end
+    @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "created_at DESC", :limit => 50)
   end
 
   def profile

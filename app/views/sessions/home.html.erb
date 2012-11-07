@@ -1,3 +1,19 @@
 <h3 class="title">
 	Hello...<%= @current_user.username %>
 </h3>
+
+<% if !@events.nil? %>
+<div id="EventList">
+	<table width="80%" border="1" cellpadding="1" cellspacing="1">
+		<% @events.each do |event| %>
+			<tr>
+				<td>event:&nbsp;<%= event.name %></td>
+				<td>location:&nbsp;<%= event.location %></td>
+				<td>start date:&nbsp;<%= event.start_date %></td>
+				<td>end date: &nbsp;<%= event.end_date %></td>
+				<td>owner:&nbsp;<%= event.user.f_name %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+<% end %>
