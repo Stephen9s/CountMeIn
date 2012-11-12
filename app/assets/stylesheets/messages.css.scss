@@ -1,0 +1,58 @@
+// Place all the styles related to the inbox controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#messages table {
+  border-collapse: collapse;
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+  color: #363636;
+  text-align: left;
+  margin-top: 4px;
+  width: 100%;
+  table-layout: fixed;
+}
+  
+#messages a {
+color: #333333;
+text-decoration: underline;
+}
+
+#messages td {
+  align: left;
+  vertical-align:text-top;
+}
+
+#messages tbody th, tbody td {
+  padding:5px;
+}
+
+#read {
+  overflow:hidden;
+  font-weight: bold;
+}
+
+#not_read a {
+  overflow:hidden;
+  color: red;
+  font-weight: bold;
+}
+
+#type {
+  font-weight: bold;
+  vertical-align:text-top;
+}
+
+#type td {
+  width: 100px;
+}
+
+#data {
+  overflow: hidden;
+}
+
+#spacer {
+  margin-top: 20px;
+  clear: both;
+}
+
+

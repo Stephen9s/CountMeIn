@@ -1,0 +1,29 @@
+<% receiver = User.find(@message.receiver_id, :select => 'id, username, f_name, l_name') %>
+<% sender = User.find(@message.sender_id, :select => 'id, username, f_name, l_name') %>
+
+<h1 align="center">Message</h1>
+
+<table id="messages">
+	<tr>
+		<td id="type">From:</td>
+		<td id="data"><%= sender.username %></td>
+	</tr>
+	<tr>
+		<td id="type">To:</td>
+		<td id="data"><%= receiver.username %></td>
+	</tr>
+	<tr>
+		<td id="type">Subject:</td>
+		<td id="data"><%= @message.subject %></td>
+	</tr>
+	<tr>
+		<td id="type">Message:</td>
+		<td id="data"><%= @message.body %></td>
+	</tr>
+	<tr>
+		<td id="type">
+			<%= link_to "Back", inbox_path %>
+		</td>
+	</tr>
+</table>
+<div id="spacer"></div>

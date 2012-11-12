@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
         has_many :events 
         has_many :memberships
         
+        # messages
+        has_many :messages
+        
         # friendship
         has_many :friendships
         has_many :friends, :through => :friendships

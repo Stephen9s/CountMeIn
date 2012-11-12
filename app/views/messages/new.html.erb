@@ -1,0 +1,38 @@
+<h1 align="center">New Message</h1><% all_friends = (current_user.all_friends + current_user.all_inverse_friends) %>
+
+
+<div id="spacer"></div>
+
+<table id="messages">
+	<%= form_for(:message, :url => {:controller => 'messages', :action => 'create'}) do |f| %>
+		<tr>
+				<td id="type">To:</td>
+				<td id="data"><%= select("message", "receiver_id", all_friends.collect {|p| [ p.username, p.id ] }, {:prompt => 'Select Friend'}) %></input></td>
+		</tr>
+		<tr>
+				<td id="type">Subject:</td>
+				<td id="data"><%= f.text_field :subject %></input></td>
+		</tr>
+		<tr>
+				<td id="type">Message: </td>
+				<td id="data"><%= f.text_area :body, :cols => "30", :rows => "10" %></input></td>
+		</tr>
+		<tr>
+			<td><%= f.submit "Send Message"%></td>
+		</tr>
+	<% end %>
+</table>
+<div id="spacer"></div>
+<div id="spacer"></div>
+<div id="spacer"></div>
+
+<%= link_to "Back", inbox_path %>
+
+
+<% if @message.errors.any? %>
+	<ul class="new_message_errors">
+		<% for message_error in @message.errors.full_messages %>
+		<li>* <%= message_error %></li>
+		<% end %>
+	</ul>
+<% end %>

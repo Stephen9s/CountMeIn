@@ -55,6 +55,12 @@ CountMeIn::Application.routes.draw do
   match "leave" => "memberships#destroy"
   post "memberships/create"
   post "memberships/destroy"
+  
+  resources :messages, :message_recipients
+  match "inbox" => "messages#index"
+  match "inbox/new" => "messages#new"
+  match "inbox/view/:message" => "messages#view"
+  post "inbox/view"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

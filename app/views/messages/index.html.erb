@@ -1,0 +1,73 @@
+<div id="inbox">
+	<% if flash[:notice] %>
+	  <p class="notice">
+	  	<%= flash[:notice] %>
+	  </p>
+	<% end %>
+	
+	<h1 align="center">Inbox</h1>
+	<br>
+	<h1>Received</h1>
+	<% if @received.size == 0%>
+		You have no messages.<br />
+	<% else %>
+		<% @received.each do |message| %>
+		
+			<% sender = User.find(message.sender_id, :select => 'id, username, f_name, l_name') %>
+			
+		<table id="messages">
+			<tr>
+				<td id="type">From:</td>
+				<td id="data"><%= sender.username %></td>
+			</tr>
+			<tr>
+				<td id="type">Subject:</td>
+				<td id="data">
+					<%= message.subject %></td>
+			</tr>
+			<tr>
+				<% if message.read == 1%>
+					<td id="read">
+				<% else %>
+					<td id="not_read">
+				<% end %>
+					<%= link_to "View Message", { :action => 'view', :message => message }, :method => :post %>
+				</td>
+			</tr>
+		</table>
+		<div id="spacer"></div>
+		<% end %>
+	<% end %>
+	
+	<h1>Sent</h1>
+	<% if @sent.size == 0%>
+		You have no messages.<br />
+	<% else %>
+		<% @sent.each do |message| %>
+		
+			<% receiver = User.find(message.receiver_id, :select => 'id, username, f_name, l_name') %>
+			
+		<table id="messages">
+			<tr>
+				<td id="type">To:</td>
+				<td id="data"><%= receiver.username %></td>
+			</tr>
+			<tr>
+				<td id="type">Subject:</td>
+				<td id="data"><%= message.subject %></td>
+			</tr>
+			<tr>
+				<td id="type">
+					<%= link_to "View Message", inbox_path %>
+				</td>
+			</tr>
+		</table>
+		<div id="spacer"></div>
+		<% end %>
+	<% end %>
+	<div id="spacer"></div>
+	<div id="spacer"></div>
+	<div id="spacer"></div>
+	<%= button_to "Write message", inbox_new_path %>
+</div>
+	
