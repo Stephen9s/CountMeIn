@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   
   before_filter :authenticate_user, :except => [:index, :login, :login_attempt, :logout]
   before_filter :save_login_state, :only => [:index, :login, :login_attempt]
+  before_filter :update_last_seen, :except => [ :login, :login_attempt, :logout]  
   
   def login
   end
@@ -49,5 +50,17 @@ class SessionsController < ApplicationController
     @requests = current_user.all_friends_requests + current_user.all_inverse_friends_requests
     @waits = current_user.all_friends_waits + current_user.all_inverse_friends_waits
   end
+  
+  def sidebar
+    friends = current_user.all_friends + current_user.all_inverse_friends
+    online = User.where("last_seen > ?",10.minutes.ago.to_s())
+    @online_frineds = (friends & online)
+  end
+  
+  private
+    def update_last_seen
+      @current_user.last_seen = DateTime.now
+      @current_user.save
+    end 
   
 end

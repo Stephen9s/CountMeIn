@@ -41,11 +41,21 @@
 	<div id="content">
 		<div id="main"><%= yield %></div>
 		<div id="sidebar">
-			<% if content_for?(:sidebar) %>
-	 			<%= yield(:sidebar)  %>
-			<% else %>
-	 			Online Friends
-			<% end %>
+			<h2> Online Friends </h2>
+			<% if @online_frineds.size > 0 %>
+				<table>
+					<% @online_frineds.each do |online| %>
+					<tr>
+		      			<td>
+		        		<dl>
+		          			<dt>Name: <%= online.username %></dt>
+		        			</dl>
+		      			</td>
+		   			</tr>
+		    		<% end %>
+				</table>
+<% end %>
+
 		</div>
 	</div>
 	<div class="clear_container"></div>
