@@ -1,19 +1,34 @@
+<script>
+$(document).ready(
+ function(){
+   setInterval(function(){
+     $('#loadEventForm').submit();
+   }, 10000);
+ });
+
+</script>
+
+<%= form_tag ({:action => 'loadEvent'}), ({:id => "loadEventForm", :remote => true, :format => :js}) do %>
+	<%= hidden_field_tag 'last_event', @events.first.id %>
+<% end %>
+
 <h3 class="title">
 	Hello...<%= @current_user.username %>
 </h3>
 
 <% if !@events.nil? %>
 <div id="EventList">
-	<table width="80%" border="1" cellpadding="1" cellspacing="1">
-		<% @events.each do |event| %>
-			<tr>
-				<td>event:&nbsp;<%= event.name %></td>
-				<td>location:&nbsp;<%= event.location %></td>
-				<td>start date:&nbsp;<%= event.start_date %></td>
-				<td>end date: &nbsp;<%= event.end_date %></td>
-				<td>owner:&nbsp;<%= event.user.f_name %></td>
-			</tr>
-		<% end %>
-	</table>
+	<hr />
+	<% @events.each do |event| %>
+		<dl>
+			<dt><b><%= event.user.f_name %></b></dt>
+			<dd>Event: <%= event.name %></dd>
+			<dd>Location: <%= event.location %></dd>
+			<dd>Start date: <%= event.start_date %></dd>
+			<dd>End date: <%= event.end_date %></dd>
+			<dd>Is public: <%= event.public %></dd>
+		</dl>
+		<hr />
+	<% end %>
 </div>
 <% end %>

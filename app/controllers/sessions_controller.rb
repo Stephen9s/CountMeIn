@@ -50,4 +50,20 @@ class SessionsController < ApplicationController
     @waits = current_user.all_friends_waits + current_user.all_inverse_friends_waits
   end
   
+  def loadEvent
+    last_event = Event.find(params[:last_event])
+    friends = current_user.all_friends + current_user.all_inverse_friends
+    friends_id = Array.new
+    friends_id << current_user.id
+    friends.each do |friend|
+      friends_id << friend.id
+    end
+    @events = Event.find(:all, :conditions => [ "user_id IN (?) and id != ? and created_at > ?", friends_id, last_event.id, last_event.created_at], :order => "created_at DESC")
+    
+    respond_to do |format|
+      format.js {}
+      format.html {}
+    end
+
+  end
 end

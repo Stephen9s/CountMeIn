@@ -2,7 +2,9 @@ CountMeIn::Application.routes.draw do
   
   
   get "sessions/friends"
-
+  post "sessions/loadEvent"
+  get "sessions/loadEvent"
+  
   resources :friendships
 
   get "events/new"
