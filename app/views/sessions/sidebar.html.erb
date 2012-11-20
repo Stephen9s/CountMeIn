@@ -1,0 +1,14 @@
+<h2>Frineds Online</h2>
+<% if @online_frineds.size > 0 %>
+	<table>
+		<% @online_frineds.each do |online| %>
+			<tr>
+		      <td>
+		        <dl>
+		          <dt>Name: <%= online.name %></dt>
+		        </dl>
+		      </td>
+		    </tr>
+		    <% end %>
+	</table>
+<% end %>

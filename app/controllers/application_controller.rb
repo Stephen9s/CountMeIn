@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+   before_filter :sidebar
+  
+  
+  def sidebar
+    friends = current_user.all_friends + current_user.all_inverse_friends
+    online = User.where("last_seen > ?",10.minutes.ago.to_s())
+    @online_frineds = (friends & online)
+  end
+  
+  
   protected
     
     def authenticate_user
