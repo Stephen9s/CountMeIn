@@ -42,35 +42,38 @@
 	<div id="content">
 		<div id="main"><%= yield %></div>
 		<div id="sidebar">
-			<% if session[:user_id] %>
-				<% if @online_friends.size > 0 %>
-					<table>
-						<tr>
-							<th>
-								Online
-							</th>
-						</tr>
-						<% @online_friends.each do |online| %>
-							<tr>
-						      <td>
-						        <dl>
-						          <dt><%= online.username %></dt>
-						        </dl>
-						      </td>
-						    </tr>
-						    <% end %>
-					</table>
-				<% else %>
-					<table>
+			<% if content_for?(:sidebar) %>
+	 			<%= yield(:sidebar)  %>
+	 		<% else %>
+				<% if session[:user_id] %>
+					<% if @online_friends.size > 0 %>
+						<table>
 							<tr>
 								<th>
-									No online friends.
+									Online
 								</th>
 							</tr>
-					</table>
+							<% @online_friends.each do |online| %>
+								<tr>
+							      <td>
+							        <dl>
+							          <dt><%= online.username %></dt>
+							        </dl>
+							      </td>
+							    </tr>
+							    <% end %>
+						</table>
+					<% else %>
+						<table>
+								<tr>
+									<th>
+										No online friends.
+									</th>
+								</tr>
+						</table>
+					<% end %>
 				<% end %>
 			<% end %>
-
 		</div>
 	</div>
 	<div class="clear_container"></div>

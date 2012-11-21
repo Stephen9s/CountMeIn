@@ -42,15 +42,15 @@ CountMeIn::Application.routes.draw do
   match "/users/:user" => "users#create"
   match "search" => "users#search"
   
-  resources :event
+  resources :events
   match "events", :to => "events#index", :as => "events"
   match "post" => "events#new"
-  match "/event/:id" => "events#show"
-  post "/event/:id/edit", :to => "events#edit"
+  match "/events/:id" => "events#show"
+  post "/events/:id/edit", :to => "events#edit"
   post "events/create"
   post "events/update"
   #put "events", :to => "events#edit"
-  post "events", :to => "events#destroy"
+  post "/event/:id/destroy", :to => "events#destroy"
   
   match "agenda" => "agenda#index"
 

@@ -2,7 +2,7 @@
 
 
 <%= link_to "View events", :controller => 'events', :action => 'index' %>
-	<%= form_for(:event, :url => {:controller => 'events', :action => 'update'}) do |f| %>
+	<%= form_for(:event, :url => {:controller => 'events', :action => 'update'}, :method => :put ) do |f| %>
 		<%= f.hidden_field :id %>
 		<p>Event Name: <%= f.text_field :name %></p>
 		<p>Location: <%= f.text_field :location %></p>

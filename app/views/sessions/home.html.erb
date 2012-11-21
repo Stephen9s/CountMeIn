@@ -9,18 +9,17 @@ $(document).ready(
 </script>
 
 <%= form_tag ({:action => 'loadEvent'}), ({:id => "loadEventForm", :remote => true, :format => :js}) do %>
-	<% if @events.nil? %>
+	<% if !@events.nil? %>
 		<%= hidden_field_tag 'last_event', @events.first.id %>
 	<% end %>
 <% end %>
 
-<h3 class="title">
-	Hello...<%= @current_user.username %>
-</h3>
+<h2 class="title">
+	
+</h2>
 
 <% if !@events.nil? %>
 <div id="EventList">
-	<hr />
 	<% @events.each do |event| %>
 		<dl>
 			<dt><b><%= event.user.f_name %></b></dt>
@@ -29,8 +28,12 @@ $(document).ready(
 			<dd>Start date: <%= event.start_date %></dd>
 			<dd>End date: <%= event.end_date %></dd>
 			<dd>Is public: <%= event.public %></dd>
+			<% if event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+            	<dd><%= link_to 'Count Me Out!', leave_path(:id => event.id), :method => :post %></dd>
+          	<% else %>
+          		<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
+          	<% end %>
 		</dl>
-		<hr />
 	<% end %>
 </div>
 <% end %>

@@ -1,8 +1,7 @@
 <% if !@events.nil? && @events.size > 0%>
 	$('#last_event').val('<%= @events.first.id %>');
 	
-	<% @events.each do |event| %>	
-		$('#EventList').prepend("</dl>");
+	<% @events.each do |event| %> 
 		$('#EventList').prepend("<dd>Is public: <%= event.public %></dd>");
 		$('#EventList').prepend("<dd>End date: <%= event.end_date %></dd>");
 		$('#EventList').prepend("<dd>Start date: <%= event.start_date %></dd>");
@@ -10,6 +9,5 @@
 		$('#EventList').prepend("<dd>Event: <%= event.name %></dd>");
 		$('#EventList').prepend("<dt><b><%= event.user.f_name %></b></dt>");
 		$('#EventList').prepend("<dl>");
-		$('#EventList').prepend("<hr />");
 	<% end %>
 <% end %>

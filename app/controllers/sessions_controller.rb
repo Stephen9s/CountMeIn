@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
   def home
     friends = current_user.all_friends + current_user.all_inverse_friends
     friends_id = Array.new
-    friends_id << current_user.id
+    #friends_id << current_user.id
     friends.each do |friend|
       friends_id << friend.id
     end
@@ -53,27 +53,21 @@ class SessionsController < ApplicationController
   
   def loadEvent
     last_event = Event.find(params[:last_event])
+    
     friends = current_user.all_friends + current_user.all_inverse_friends
     friends_id = Array.new
-    friends_id << current_user.id
+    #friends_id << current_user.id
     friends.each do |friend|
       friends_id << friend.id
     end
-    @events = Event.find(:all, :conditions => [ "user_id IN (?) and id != ? and created_at > ?", friends_id, last_event.id, last_event.created_at], :order => "created_at DESC")
+    
+   @events = Event.find(:all, :conditions => [ "user_id IN (?) and id != ? and created_at > ?", friends_id, last_event.id, last_event.created_at], :order => "created_at DESC")
     
     respond_to do |format|
       format.js {}
       format.html {}
     end
 
-  end
-
-  def sidebar
-    if session[:user_id]
-      friends = current_user.all_friends + current_user.all_inverse_friends
-      online = User.where("last_seen > ?",10.minutes.ago.to_s())
-      @online_friends = (friends & online)
-    end
   end
   
   private

@@ -21,7 +21,7 @@
 						<dd>End date: <%= event.end_date %></dd>
 			          	<%= button_to 'Edit', edit_event_path(event)  %>
 					  <% end %>
-			          <%= button_to 'Destroy', { :action => 'destroy', :id => event }, :confirm => 'Are you sure?', :post => true %></td>
+			          <%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => event }, :confirm => 'Are you sure?', :method => :delete %></td>
 			        </dl>
 			      </td>
 			    </tr>
