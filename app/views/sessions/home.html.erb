@@ -9,7 +9,9 @@ $(document).ready(
 </script>
 
 <%= form_tag ({:action => 'loadEvent'}), ({:id => "loadEventForm", :remote => true, :format => :js}) do %>
-	<%= hidden_field_tag 'last_event', @events.first.id %>
+	<% if @events.nil? %>
+		<%= hidden_field_tag 'last_event', @events.first.id %>
+	<% end %>
 <% end %>
 
 <h3 class="title">

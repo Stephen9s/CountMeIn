@@ -32,6 +32,23 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
   end
+  
+  def update
+    event = Event.find(params[:event][:id])
+    event.name = params[:event][:name]
+    event.location = params[:event][:location]
+    event.public = params[:event][:public]
+    
+    
+    if event.save
+      respond_to do |format|
+        format.html { redirect_to events_index_path, :notice => "Event updated!"}
+        format.xml  { head :no_content }
+      end
+    else
+      redirect_to events_index_path, :notice => "Event update failed!"
+    end
+  end
 
   def destroy
     @event = Event.find(params[:id])

@@ -69,15 +69,17 @@ class SessionsController < ApplicationController
   end
 
   def sidebar
-    friends = current_user.all_friends + current_user.all_inverse_friends
-    online = User.where("last_seen > ?",10.minutes.ago.to_s())
-    @online_frineds = (friends & online)
+    if session[:user_id]
+      friends = current_user.all_friends + current_user.all_inverse_friends
+      online = User.where("last_seen > ?",10.minutes.ago.to_s())
+      @online_friends = (friends & online)
+    end
   end
   
   private
     def update_last_seen
-      @current_user.last_seen = DateTime.now
-      @current_user.save
+      current_user.last_seen = DateTime.now
+      current_user.save
     end 
 
 end

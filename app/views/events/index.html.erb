@@ -16,6 +16,9 @@
 			          <% if event.start_date.past? %>
 			          	<dd>This event can not be edited becoue the start date has past</dd>
 			          <% else %>
+			          	<dd>Event: <%= event.name %></dd>
+						<dd>Start date: <%= event.start_date %></dd>
+						<dd>End date: <%= event.end_date %></dd>
 			          	<%= button_to 'Edit', edit_event_path(event)  %>
 					  <% end %>
 			          <%= button_to 'Destroy', { :action => 'destroy', :id => event }, :confirm => 'Are you sure?', :post => true %></td>
