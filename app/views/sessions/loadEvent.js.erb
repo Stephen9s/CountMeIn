@@ -1,4 +1,4 @@
-<% if !@events.nil? && @events.size > 0%>
+<% if @events && @events.size > 0%>
 	$('#last_event').val('<%= @events.first.id %>');
 	
 	<% @events.each do |event| %> 
