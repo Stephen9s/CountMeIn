@@ -1,39 +1,35 @@
 <script>
+	
 $(document).ready(
  function(){
-   setInterval(function(){
-     $('#loadEventForm').submit();
-   }, 10000);
+ 	function getData(){
+		$.getJSON('/home.json', function(posts) {
+	     	document.getElementById("json").innerHTML = "";
+		    var all = "";	
+		  	$.each(posts, function(i, field){
+		      all += 
+		      "<dl>" + 
+		      "<dt><b>" + field.username + "</b></dt>" +
+		      "<dd>Event: " + field.name + "</dd>" +
+		      "<dd>Location: " + field.location + "</dd>" +
+		      "<dd>Start: " + field.start_date + "</dd>" +
+		      "<dd>End: " + field.end_date + "</dd>" +
+		      "<dd><a href=\"http://localhost:3000/events/" + field.id + "\">View Event</a></dd>" +
+		      "</dl>";
+		    });
+	    
+	    	if (all == "")
+	    		all = "No events.";
+	    
+	    	document.getElementById("json").innerHTML = all;
+		});
+	}
+	
+   getData();
+   setInterval(getData, 1000);
  });
-
 </script>
 
-<%= form_tag ({:action => 'loadEvent'}), ({:id => "loadEventForm", :remote => true, :format => :js}) do %>
-	<% if @events.size > 0 %>
-		<%= hidden_field_tag 'last_event', @events.first.id %>
-	<% end %>
-<% end %>
-
-<h2 class="title">
+<div id="json">
 	
-</h2>
-
-<% if !@events.nil? %>
-<div id="EventList">
-	<% @events.each do |event| %>
-		<dl>
-			<dt><b><%= event.user.f_name %></b></dt>
-			<dd>Event: <%= event.name %></dd>
-			<dd>Location: <%= event.location %></dd>
-			<dd>Start date: <%= event.start_date %></dd>
-			<dd>End date: <%= event.end_date %></dd>
-			<dd>Is public: <%= event.public %></dd>
-			<% if event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-            	<dd><%= link_to 'Count Me Out!', leave_path(:id => event.id), :method => :post %></dd>
-          	<% else %>
-          		<dd><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></dd>
-          	<% end %>
-		</dl>
-	<% end %>
 </div>
-<% end %>

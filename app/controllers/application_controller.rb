@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  before_filter :sidebar
+  before_filter :sidebar, :except => [ :login, :login_attempt, :logout] 
   before_filter :update_last_seen, :except => [ :login, :login_attempt, :logout] 
   
   
   def sidebar
-    if session[:user_id]
+    if current_user
       friends = current_user.all_friends + current_user.all_inverse_friends
-      online = User.where("last_seen > ?",10.seconds.ago.to_s())
+      online = User.where("last_seen > ?",10.minutes.ago.to_s())
       @online_friends = (friends & online)
     end
   end
@@ -46,8 +46,12 @@ class ApplicationController < ActionController::Base
     end
     
     def update_last_seen
-      current_user.last_seen = DateTime.now
-      current_user.save
+      if current_user
+        current_user.last_seen = DateTime.now
+        current_user.save
+      else
+        redirect_to(:controller => 'sessions', :action => 'logout')
+      end
     end 
     
     helper_method :current_user

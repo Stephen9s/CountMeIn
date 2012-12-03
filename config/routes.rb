@@ -52,6 +52,11 @@ CountMeIn::Application.routes.draw do
   #put "events", :to => "events#edit"
   post "/event/:id/destroy", :to => "events#destroy"
   
+  # RSS
+  match '/feed' => 'events#feed',
+      :as => :feed,
+      :defaults => { :format => 'atom' }
+  
   match "agenda" => "agenda#index"
 
   resources :memberships
@@ -65,6 +70,7 @@ CountMeIn::Application.routes.draw do
   match "inbox/new" => "messages#new"
   match "inbox/view/:message" => "messages#view"
   post "inbox/view"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

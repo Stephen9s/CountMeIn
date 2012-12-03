@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   before_filter :save_login_state, :only => [:index, :login, :login_attempt] 
   
   def login
+    
   end
   
   def login_attempt
@@ -27,14 +28,32 @@ class SessionsController < ApplicationController
     redirect_to :action => 'login'
   end
 
-  def home
+  def home   
     friends = current_user.all_friends + current_user.all_inverse_friends
     friends_id = Array.new
     #friends_id << current_user.id
     friends.each do |friend|
       friends_id << friend.id
     end
-    @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "created_at DESC", :limit => 50)
+    
+    begin
+      @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "created_at DESC", :limit => 50)
+    rescue ActiveRecord::RecordNotFound
+      @events = []
+    end
+    
+    @json_events = @events.clone
+    
+    @json_events.each do |event|
+      user = User.find(event.user_id, :select => "username", :limit => 1)
+      event.username = user.username
+    end
+ 
+    # Add username to json format
+    respond_to do |format|
+      format.json  { render :json => @json_events.as_json(:methods => [:username]) }
+      format.html {}
+    end
   end
 
   def profile
@@ -60,10 +79,15 @@ class SessionsController < ApplicationController
       friends_id << friend.id
     end
     
-   @events = Event.find(:all, :conditions => [ "user_id IN (?) and id != ? and created_at > ?", friends_id, last_event.id, last_event.created_at], :order => "created_at DESC")
+    
+    begin
+      @events = Event.find(:all, :conditions => [ "user_id IN (?) and id != ? and created_at > ?", friends_id, last_event.id, last_event.created_at], :order => "created_at DESC")
+    rescue ActiveRecord::RecordNotFound
+      @events = []
+    end
     
     respond_to do |format|
-      format.js {}
+      format.json  { render :json => @events }
       format.html {}
     end
 

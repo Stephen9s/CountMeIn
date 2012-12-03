@@ -81,6 +81,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @event }
+      format.json  { render :json => @event }
     end
   end
 
@@ -88,6 +89,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     
     @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event])
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      #format.xml  { render :xml => @event }
+      format.json  { render :json => @event }
+    end
   end
   
   def search
@@ -98,4 +105,19 @@ class EventsController < ApplicationController
     end
   end
   
+  # lindsaar.net
+  def feed
+    @title = "CountMeIn Public Events"
+    
+    # Already ordered via model
+    @events = Event.find_all_by_public(1)
+    
+    @updated = @events.first.updated_at unless @events.empty?
+    
+    respond_to do |format|
+      format.atom { render :layout => false }
+      format.rss { redirect_to feed_path(:format => :atom), :status => :moved_permanently }
+   end
+   
+  end
 end

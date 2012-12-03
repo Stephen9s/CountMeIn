@@ -9,7 +9,7 @@
 		<p>First Name: <%= f.text_field :f_name %></p>
 		<p>Last Name: <%= f.text_field :l_name %></p>
 		<p>Mobile Phone: <%= f.text_field :mobile_phone %></p>
-		<p>DOB: <%= f.text_field :dob %></p>
+		<p>DOB: <%= f.datepicker :dob %></p>
 		<p>Gender: <%= f.select(:gender, [['Male', 'M'], ['Female', 'F'], ['Other', 'O']]) %></p>
 		<p>Short Description: <%= f.text_field :description, :class => 'description'%></p>
 		<p>Password: <%= f.password_field :password %></p>		
