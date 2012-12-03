@@ -1,9 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  
-  before_filter :sidebar, :except => [ :login, :login_attempt, :logout] 
-  before_filter :update_last_seen, :except => [ :login, :login_attempt, :logout] 
-  
+  protect_from_forgery  
   
   def sidebar
     if current_user
@@ -12,6 +8,15 @@ class ApplicationController < ActionController::Base
       @online_friends = (friends & online)
     end
   end
+  
+  def update_last_seen
+    if current_user
+      current_user.last_seen = DateTime.now
+      current_user.save
+    else
+      redirect_to(:controller => 'sessions', :action => 'logout')
+    end
+  end 
   
   
   protected
@@ -23,6 +28,8 @@ class ApplicationController < ActionController::Base
       else
         begin
           @current_user = User.find(session[:user_id])
+          self.update_last_seen
+          self.sidebar
           return true
         rescue ActiveRecord::RecordNotFound
           redirect_to(:controller => 'sessions', :action => 'logout')
@@ -44,15 +51,6 @@ class ApplicationController < ActionController::Base
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
-    
-    def update_last_seen
-      if current_user
-        current_user.last_seen = DateTime.now
-        current_user.save
-      else
-        redirect_to(:controller => 'sessions', :action => 'logout')
-      end
-    end 
     
     helper_method :current_user
 end
