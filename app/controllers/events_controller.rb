@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   
-  before_filter :authenticate_user
+  before_filter :authenticate_user, :except => [:feed]
   
   def new
     @event = Event.new
@@ -24,9 +24,6 @@ class EventsController < ApplicationController
     else
       render "new"
     end
-  end
-
-  def update
   end
 
   def edit
@@ -86,14 +83,24 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
-    
-    @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event])
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      #format.xml  { render :xml => @event }
-      format.json  { render :json => @event }
+
+    if !Event.exists?(params[:id])
+      redirect_to(:controller => 'sessions', :action => 'logout')
+    else
+      @event = Event.find(params[:id])
+      @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event], :order => "l_name ASC")
+      
+      friendship = current_user.friendships.find_by_friend_id(@event.user_id)
+      
+      if @event.public == 0 && !friendship
+        redirect_to(:controller => 'sessions', :action => 'logout')
+      else
+        respond_to do |format|
+          format.html # index.html.erb
+          #format.xml  { render :xml => @event }
+          format.json  { render :json => @event }
+        end
+      end
     end
   end
   

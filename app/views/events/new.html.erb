@@ -1,16 +1,33 @@
-<h1>Post Event</h1>
-
-<%= link_to "View events", events_path %>
-
-	<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
-		<p>Event Name: <%= f.text_field :name %></p>
-		<p>Start Date: <%= f.datepicker :start_date %></p>
-		<p>End Date: <%= f.datepicker :end_date %></p>
-		<p>Location: <%= f.text_field :location %></p>
-		<p>Make Public: <%= f.check_box(:public) %></p>
-		<%= f.submit %>
-	<% end %>
-
+<h1 align="center">Post Event</h1>
+<div align="center">
+	<table>
+    	<tr>
+    		<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
+    		<td class="label">Event title:</td>
+    		<td class="input"><%= f.text_field :name %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Start date:</td>
+    		<td class="input"><%= f.datepicker :start_date %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">End date:</td>
+    		<td class="input"><%= f.datepicker :end_date %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Location:</td>
+    		<td class="input"><%= f.text_field :location %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Public?</td>
+    		<td class="input"><%= f.check_box(:public) %></td>
+    	</tr>
+    	<tr>
+    		<td><%= f.submit :Post, :class => "button" %></td>
+    		<% end %>
+    	</tr>
+    </table>
+    
 	<% if @event.errors.any? %>
 		<ul class="new_event_errors">
 			<% for message_error in @event.errors.full_messages %>
@@ -18,3 +35,4 @@
 			<% end %>
 		</ul>
 	<% end %>
+</div>

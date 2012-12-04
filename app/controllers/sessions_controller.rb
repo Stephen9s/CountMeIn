@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
     end
     
     begin
-      @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "created_at DESC", :limit => 50)
+      @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "updated_at DESC")
     rescue ActiveRecord::RecordNotFound
       @events = []
     end

@@ -4,61 +4,65 @@
       </p>
 <% end %>
 
-<% if !@friends.nil? %>
-<div>
-	<h1>Friend Lists</h1>
+<h1 align="center">Friends</h1>
 
-	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+<div align="center">
+<% if @friends.size > 0 %>
+<div>
+	<table width="450px"  border="0" cellpadding="0" cellspacing="1">
 		<tr>
 			<td width="70%"></td>
 			<td width="30%"></td>
 		</tr>
 		<% @friends.each do |friend| %>
 			<tr>
-				<td><%= friend.f_name %></td>
-				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => friend.id), :method => :delete %></td>
+				<td><%= friend.f_name %> <%= friend.l_name %></td>
+				<td><%= link_to "Delete", friendships_path(:friend_id => friend.id), :method => :delete %></td>
 			</tr>
 		<% end %>
 	</table>
 </div>
+<% else %>
+<div>
+	<h3>You have no friends :(.</h3>
+</div>
 <% end %>
 
-<% if !@requests.nil? %>
+<% if @requests.size > 0 %>
 <div>
 	<h1>Friend Requests</h1>
 	
-	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+	<table width="450px" border="0" cellpadding="0" cellspacing="1">
 		<tr>
-			<td width="50%"></td>
-			<td width="25%"></td>
-			<td width="25%"></td>
+			<td width="70%"></td>
+			<td width="30%"></td>
 		</tr>
 		<% @requests.each do |request| %>
 			<tr>
-				<td><%= request.f_name %></td>
-				<td align="center"><%= link_to "Accept", friendships_path(:friend_id => request.id), :method => :put %></td>
-				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => request.id), :method => :delete %></td>
+				<td><%= request.f_name %> <%= request.l_name %></td>
+				<td align="center"><%= link_to "Accept", friendships_path(:friend_id => request.id), :method => :put %>/<%= link_to "Decline", friendships_path(:friend_id => request.id), :method => :delete %></td>
 			</tr>
 		<% end %>
 	</table>
 </div>
 <% end %>
 
-<% if !@waits.nil? %>
+<% if @waits.size > 0 %>
 <div>
-	<h1>Friend Waiting</h1>
+	<h1>Sent Requests</h1>
 	
-	<table width="250px" border="0" cellpadding="0" cellspacing="1">
+	<table width="450px" border="0" cellpadding="0" cellspacing="1">
 		<tr>
 			<td width="70%"></td>
 			<td width="30%"></td>
 		</tr>
 		<% @waits.each do |wait| %>
 			<tr>
-				<td><%= wait.f_name %></td>
+				<td><%= wait.f_name %> <%= wait.l_name %></td>
 				<td align="center"><%= link_to "Delete", friendships_path(:friend_id => wait.id), :method => :delete %></td>
 			</tr>
 		<% end %>
 	</table>
 </div>
 <% end %>
+</div>

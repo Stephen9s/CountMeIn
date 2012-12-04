@@ -11,7 +11,8 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  font: 11px verdana, sans-serif;
+  font: 12px;
+  font-family: ‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif;
 }
 
 // 0u11Tw0w0w0w0 id http://colorschemedesigner.com/#
@@ -100,7 +101,7 @@ body {
   border-top: 2px solid;
   border-bottom: 2px solid;
   color: #334;
-  position: relative;
+  position: fixed;
   bottom: 0;
   width: 960px;
 }
@@ -109,3 +110,16 @@ body {
   clear: both;
 }
 
+#online td {
+  padding: 0px;
+  border: collapse;
+}
+
+#online_title td {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#online_friend_line {
+  color: green;
+}

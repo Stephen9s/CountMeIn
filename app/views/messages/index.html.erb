@@ -6,8 +6,7 @@
 	<% end %>
 	
 	<h1 align="center">Inbox</h1>
-	<br>
-	<h1>Received</h1>
+	<h2>Received</h2>
 	<% if @received.size == 0%>
 		You have no messages.<br />
 	<% else %>
@@ -39,9 +38,9 @@
 		<% end %>
 	<% end %>
 	
-	<h1>Sent</h1>
+	<h2>Sent</h2>
 	<% if @sent.size == 0%>
-		You have no messages.<br />
+		You have sent no messages.<br />
 	<% else %>
 		<% @sent.each do |message| %>
 		

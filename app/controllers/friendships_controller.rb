@@ -49,10 +49,10 @@ class FriendshipsController < ApplicationController
     
     respond_to do |format|
       if friendship.update_attributes(:request => nil)
-        format.html { redirect_to friends_path, :notice => "Accept friend." }
+        format.html { redirect_to friends_path, :notice => "Accepted friend." }
         format.json { head :no_content }
       else
-        format.html { redirect_to friends_path, :notice => "Cannot Accept friend." }
+        format.html { redirect_to friends_path, :notice => "Could not accept friend." }
         format.json { render json: friendship.errors, status: :unprocessable_entity }
       end
     end

@@ -3,18 +3,52 @@
 	<h1>
 		Sign up!
 	</h1>
-	<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
-		<p>Username: <%= f.text_field :username %></p>
-		<p>E-mail: <%= f.text_field :email %></p>
-		<p>First Name: <%= f.text_field :f_name %></p>
-		<p>Last Name: <%= f.text_field :l_name %></p>
-		<p>Mobile Phone: <%= f.text_field :mobile_phone %></p>
-		<p>DOB: <%= f.datepicker :dob %></p>
-		<p>Gender: <%= f.select(:gender, [['Male', 'M'], ['Female', 'F'], ['Other', 'O']]) %></p>
-		<p>Short Description: <%= f.text_field :description, :class => 'description'%></p>
-		<p>Password: <%= f.password_field :password %></p>		
-		<p>Confirm : <%= f.password_field :password_confirmation %></p>
-		<%= f.submit :Signup %>
+	<table>
+    	<tr>
+    		<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+    		<td class="label">Username:</td>
+    		<td class="input"><%= f.text_field :username %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">E-mail:</td>
+    		<td class="input"><%= f.text_field :email %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">First name:</td>
+    		<td class="input"><%= f.text_field :f_name %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Last name:</td>
+    		<td class="input"><%= f.text_field :l_name %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Mobile phone:</td>
+    		<td class="input"><%= f.text_field :mobile_phone %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">DOB:</td>
+    		<td class="input"><%= f.datepicker :dob %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Gender:</td>
+    		<td class="input"><%= f.select(:gender, [['Male', 'M'], ['Female', 'F'], ['Other', 'O']]) %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Short description:</td>
+    		<td class="input"><%= f.text_field :description, :class => 'description'%></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Password:</td>
+    		<td class="input"><%= f.password_field :password %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Confirm:</td>
+    		<td class="input"><%= f.password_field :password_confirmation %></td>
+    	</tr>
+    	<tr>
+    		<td><%= f.submit :Signup , :class => "button" %></td>
+    	</tr>
+    </table>
 	<% end %>
 		
 	<% if @user.errors.any? %>

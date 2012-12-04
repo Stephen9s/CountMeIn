@@ -1,29 +1,62 @@
-<h1><%= @event.name %></h1>
-<dl>
-  <dd>Even Location: <%= @event.location %></dd>
-  <dd>Start date: <%= @event.start_date %></dd>
-  <dd>End date: <%= @event.end_date %></dd>
-  <dd>Is public: <%= @event.public %></dd>
-  <dd>Owner: <%= @event.user_id %></dd>
-  <% if @event.user_id.equal?(current_user.id) %>
-  	<dd><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => @event }, :confirm => 'Are you sure?', :method => :delete %></dd>
-  <% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-    <dd><%= link_to 'Count Me Out!', leave_path(:id => @event.id), :method => :post %></dd>
-  <% else %>
-  	<dd><%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %></dd>
-  <% end %>
-</dl>
-
-<% content_for :sidebar do %>
-	<div id="members">
-	<h3>Members</h3>
-		<% @event_memberships.each do |member| %>
-			<dl>
-				<dt>
-					<%= member.l_name %>, <%= member.f_name %><% if member.user_id == current_user.id %> (<b>Owner</b>)<%end%>
-				</dt>
-			</dl>
-		<% end %>
-	</div>
+<h1 align="center"><%= @event.name %></h1>
+<div align="center">
+	<table>
+    	<tr>
+    		<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
+    		<td class="label">Location:</td>
+    		<td class="input"><%= @event.location %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">Start date:</td>
+    		<td class="input"><%= @event.start_date %></td>
+    	</tr>
+    	<tr>
+    		<td class="label">End date:</td>
+    		<td class="input"><%= @event.end_date %></td>
+    	</tr>    		
+    	<tr>
+    		<td class="label">Public?</td>
+    		<td class="input"><% if @event.public == 1%>Yes<% end %></td>
+    	</tr>
+    	<% if current_user %>
+    	<tr>
+    		<td class="label">
+    			<% if @event.user_id.equal?(current_user.id) %>
+  					<%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => @event }, :confirm => 'Are you sure?', :method => :delete %>
+  				<% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+    				<%= link_to 'Count Me Out!', leave_path(:id => @event.id), :method => :post %>
+  				<% else %>
+  					<%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %>
+  				<% end %>
+    		</td>
+    		<td class="input"></td>
+    	</tr>
+    	<% end %>
+    		<% end %>
+    </table>
+<% if current_user %>
+	<% content_for :sidebar do %>
+		<table id="members">
+			<tr>
+				<td id="members_title"><b>Members</b></td>
+			</tr>
+			<% @event_memberships.each do |member| %>
+				<tr>
+			    	<td <% if member.user_id == @event.user_id %>id="member_owner_line"<% else %>id="member_line"<%end%>><%= member.l_name %>, <%= member.f_name %></td>
+			    </tr>
+			    <% end %>
+		</table>
+	<% end %>
+<% else %>
+	<% content_for :sidebar do %>
+		<table id="members">
+			<tr>
+				<td id="members_title"><b>Members</b></td>
+			</tr>
+			<tr>
+				<td>Sign up to view.</td>
+			</tr>
+		</table>
+	<% end %>
 <% end %>
-
+</div>
