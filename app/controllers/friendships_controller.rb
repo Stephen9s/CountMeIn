@@ -61,6 +61,7 @@ class FriendshipsController < ApplicationController
   def delete
     #friend_id = 1
     friend_id = params[:friend_id].to_i
+    friend_id_r = friend_id
     
      # if 2 > 1
     if current_user.id > friend_id
@@ -74,11 +75,26 @@ class FriendshipsController < ApplicationController
     else
       user = current_user
     end
+    
     friendship = user.friendships.find_by_friend_id(friend_id)
     friendship.destroy
     
+    # NEED TO DESTROY EACH OTHER'S MEMBERSHIPS WITHOUT DESTROY EVENT OWNER'S MEMBERSHIP
+    
+    # Find events owned by new_current_user_id, remove friend's memberships
+    friends_memberships_with_me = Membership.find(:all, :conditions => ["owner_id = ? and user_id != ? and user_id = ?", current_user.id, current_user.id, friend_id_r])
+    friends_memberships_with_me.each do |r|
+      r.destroy
+    end
+    
+    friends_memberships_with_them = Membership.find(:all, :conditions => ["owner_id = ? and user_id != ? and user_id = ?", friend_id_r, friend_id_r, current_user.id])
+    friends_memberships_with_them.each do |r|
+      r.destroy
+    end
+
+    
     respond_to do |format|
-      format.html { redirect_to friends_path, :notice => "Removed friend." }
+      format.html { redirect_to friends_path, :notice => "Removed friend and all memberships to events." }
       format.json { head :no_content }
     end
   end

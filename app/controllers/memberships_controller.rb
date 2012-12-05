@@ -4,7 +4,7 @@ class MembershipsController < ApplicationController
   
   def create
     event = Event.find_by_id(params[:event_id])
-    membership = event.memberships.build(:event_id => params[:event_id], :user_id => current_user.id)
+    membership = event.memberships.build(:event_id => params[:event_id], :user_id => current_user.id, :owner_id => event.user_id)
     
     if membership.save
       redirect_to events_index_path, :notice => "Event joined!"

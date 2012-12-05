@@ -13,7 +13,7 @@ class EventsController < ApplicationController
     if @event.save
       
         event = Event.find_by_id(@event.id)
-        membership = event.memberships.build(:event_id => event.id, :user_id => current_user.id)
+        membership = event.memberships.build(:event_id => event.id, :user_id => current_user.id, :owner_id => current_user.id)
         
         if membership.save
           redirect_to events_index_path, :notice => "Event created!"
