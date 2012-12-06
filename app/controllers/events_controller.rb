@@ -49,14 +49,21 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
+    memberships = Membership.find_all_by_event_id(params[:id])
     if @event.user_id = current_user.id
       @event.destroy
+      
+      memberships.each do |r|
+        r.destroy
+      end
+      
+      respond_to do |format|
+        format.html { redirect_to events_index_path, :notice => "Event deleted!"}
+        format.xml  { head :no_content }
+      end
     end
 
-    respond_to do |format|
-      format.html { redirect_to events_index_path, :notice => "Event deleted!"}
-      format.xml  { head :no_content }
-    end
+    
   end
 
   def index
@@ -105,11 +112,10 @@ class EventsController < ApplicationController
   end
   
   def search
-    if params[:search]
-      @results = Event.find(:all, :conditions => ['name || location || username LIKE ?', "%#{params[:search.downcase]}%"])
-    else
-      @results = []
+    if params[:search_events] != ""
+      @results = Event.find(:all, :conditions => ['name || location LIKE ? and public = 1', "%#{params[:search_events.downcase]}%"])
     end
+    
   end
   
   # lindsaar.net

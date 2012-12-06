@@ -4,63 +4,52 @@
 	  	<%= flash[:notice] %>
 	  </p>
 	<% end %>
+	<h1 align="center">Your Events</h1>
+	
+	
 	<% if @p_event.size == 0 && @event.size == 0%>
-			There are no public or private events.<br />
+			You haven't created any events!<br />
 		 <%= link_to "Post an event now!", post_path %>
 	<% else %>
-		<h1>Events that I Own</h1>
 		<% if @p_event.size > 0 %>
-			<table>
+				<table>
 				<% @p_event.each do |event| %>
-			    	<% if !event.end_date.past?%>
-			          <% if event.start_date.past? %>
-			          	<dd>This event can not be edited becoue the start date has past</dd>
+			    	<% if event.end_date > Date.today %>
+			          <% if event.start_date < Date.today %>
+			          	<tr>
+			          		<td class="label">Name:</td>
+				    		<td class="input"><%= event.name %></td>
+				    		<td class="input"></td>
+				    		<% if event.user_id.equal?(current_user.id) %>
+				    			<td class="input"><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => event }, :confirm => 'Are you sure?', :method => :delete %></td>
+							<% else %>
+				    			<td class="input">Event passed.</td>
+				    		<% end %>
+			          	</tr>
 			          <% else %>
-			          	<dd>Event: <%= event.name %></dd>
-						<dd>Start date: <%= event.start_date %></dd>
-						<dd>End date: <%= event.end_date %></dd>
-			          	<%= button_to 'Edit', edit_event_path(event)  %>
-					  <% end %>
-			          <%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => event }, :confirm => 'Are you sure?', :method => :delete %></td>
-			        </dl>
-			      </td>
-			    </tr>
-			    <% end %>
-			  <% end %>
-			</table>
+				    	<tr>
+				    		<td class="label">Name:</td>
+				    		<td class="input"><%= link_to event.name, :controller => "events", :action => "show", :id => event.id %></td>
+				    		
+				    		<% if event.user_id.equal?(current_user.id) %>
+				    			<td class="input"><%= button_to 'Modify', { :controller => "events", :action => "edit", :id => event }, :method => :put %></td>
+				    			<td class="input"><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => event }, :confirm => 'Are you sure?', :method => :delete %></td>
+			    			<% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+			    				<td class="input"><%= link_to 'Count Me Out!', leave_path(:id => event.id), :method => :post %></td>
+			  				<% else %>
+			  					<td class="input"><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></td>
+			  				<% end %>
+				    	</tr>
+		    			<% end %>
+		    		<% end %>
+		    	<% end %>
+		    	</table>
 		<% else %>
-			You don't own any events. <%= link_to "Create one now?", post_path %>
-		<% end %>
-		
-		<h1>Public Event list</h1>
-		<% if @event.size > 0 %>
 			<table>
-			<% @event.each do |event| %>
-			<% if !event.end_date.past?%>
-		    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		      <td class="list_description">
-		        <dl>
-		          <dt>Event Name: <%= event.name %></dt>
-		          <dd>Even Location: <%= event.location %></dd>
-		          <dd>Start date: <%= event.start_date %></dd>
-		          <dd>End date: <%= event.end_date %></dd>
-		          <dd>Is public: <%= event.public %></dd>
-		          <dd>Owner: <%= event.user_id %></dd>
-		          <% if event.user_id.equal?(current_user.id) %>
-		          	<dd>You own this!</dd>
-		          <% elsif event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-		            <dd><%= link_to 'Count Me Out!', leave_path(:id => event.id), :confirm => 'Are you sure?', :method => :post %></dd>
-		          <% else %>
-		          	<dd><%= link_to "Count Me In!", join_path(:event_id => event.id),:confirm => 'Are you sure?', :method => :post %></dd>
-		          <% end %>
-		        </dl>
-		      </td>
-		    </tr>
-		    <% end %>
-		  <% end %>
-		  </table>
-		<% else %>
-			There are no public events.  <%= link_to "Create one now?", post_path %>
+				<tr>
+					<td>You don't own any events. <%= link_to "Create one now?", post_path %></td>
+				</tr>
+			</table>
 		<% end %>
 	<% end %>
 </div>

@@ -2,7 +2,6 @@
 <div align="center">
 	<table>
     	<tr>
-    		<%= form_for(:event, :url => {:controller => 'events', :action => 'create'}) do |f| %>
     		<td class="label">Location:</td>
     		<td class="input"><%= @event.location %></td>
     	</tr>
@@ -16,23 +15,22 @@
     	</tr>    		
     	<tr>
     		<td class="label">Public?</td>
-    		<td class="input"><% if @event.public == 1%>Yes<% end %></td>
+    		<td class="input"><% if @event.public == 1%>Yes<%else%>No<% end %></td>
     	</tr>
     	<% if current_user %>
     	<tr>
-    		<td class="label">
-    			<% if @event.user_id.equal?(current_user.id) %>
-  					<%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => @event }, :confirm => 'Are you sure?', :method => :delete %>
-  				<% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
-    				<%= link_to 'Count Me Out!', leave_path(:id => @event.id), :method => :post %>
-  				<% else %>
-  					<%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %>
-  				<% end %>
-    		</td>
-    		<td class="input"></td>
+			<% if @event.user_id.equal?(current_user.id) %>
+				<td class="input"><%= button_to 'Modify', { :controller => "events", :action => "edit", :id => @event }, :method => :put  %></td>
+			    <td class="input"><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => @event }, :confirm => 'Are you sure?', :method => :delete %></td>
+			<% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>
+				<td class="label"><%= link_to 'Count Me Out!', leave_path(:id => @event.id), :method => :post %></td>
+    			<td class="input"></td>
+			<% else %>
+				<td class="label"><%= link_to "Count Me In!", join_path(:event_id => @event.id), :method => :post %></td>
+    			<td class="input"></td>
+			<% end %>
     	</tr>
     	<% end %>
-    		<% end %>
     </table>
 <% if current_user %>
 	<% content_for :sidebar do %>

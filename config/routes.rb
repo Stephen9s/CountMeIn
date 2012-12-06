@@ -46,11 +46,12 @@ CountMeIn::Application.routes.draw do
   match "events", :to => "events#index", :as => "events"
   match "post" => "events#new"
   match "/events/:id" => "events#show"
-  post "/events/:id/edit", :to => "events#edit"
+  put "/events/:id/edit", :to => "events#edit"
   post "events/create"
-  post "events/update"
+  post "/events/:id", :to => "events#update"
   #put "events", :to => "events#edit"
   post "/event/:id/destroy", :to => "events#destroy"
+  match "searchevents" => "events#search"
   
   # RSS
   match '/feed' => 'events#feed',

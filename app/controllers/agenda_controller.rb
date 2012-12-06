@@ -9,7 +9,7 @@ class AgendaController < ApplicationController
     #                    :joins=>" INNER JOIN memberships ON events.id = memberships.event_id")
     
     # Find all memberships that the user has joined
-    @events_by_date = @events.group_by(&:end_date)
+    @events_by_date = @events.group_by(&:start_date)
     @date = params[:date] ? Date.strptime(params[:date], "%Y-%m-%d") : Date.today
   end
 end

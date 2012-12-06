@@ -1,7 +1,27 @@
-<h1>Hello, <%= @profile.username %></h1>
-<p>First name: <%= @profile.f_name %></p>
-<p>Last name: <%= @profile.l_name %></p>
-<p>E-mai: <%= @profile.email %></p>
-<p>DOB: <%= @profile.dob %></p>
-<p>Gender: <% if (@profile.gender == 'M') %> Male <% elsif (@profile.gender == 'F') %> Female <% else %> Other <% end %></p>
-<p>Description: <%= @profile.description %></p>
+<h1 align="center">Your Profile</h1>
+<table>
+	<tr>
+		<td class="label">Username:</td>
+		<td class="input"><%= @profile.username %></td>
+	</tr>
+	<tr>
+		<td class="label">Name:</td>
+		<td class="input"><%= @profile.l_name %>, <%= @profile.f_name %></td>
+	</tr>
+	<tr>
+		<td class="label">E-mail:</td>
+		<td class="input"><%= @profile.email %></td>
+	</tr>    		
+	<tr>
+		<td class="label">DOB</td>
+		<td class="input"><%= @profile.dob %></td>
+	</tr>    		
+	<tr>
+		<td class="label">Gender</td>
+		<td class="input"><% if (@profile.gender == 'M') %> Male <% elsif (@profile.gender == 'F') %> Female <% else %> Other <% end %></td>
+	</tr>   		
+	<tr>
+		<td class="label">Description</td>
+		<td class="input"><%= @profile.description %></td>
+	</tr>
+</table>

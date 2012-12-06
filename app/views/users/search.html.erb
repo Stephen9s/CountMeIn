@@ -1,22 +1,31 @@
 <h1>Results</h1>
 
 <div id="list">
-<% if !@search_list.nil? %>
-	<% if @search_list.size >= 0 %>
-	<table width="250px" border="0" cellpadding="0" cellspacing="1">
-		<tr>
-			<td width="70%"></td>
-			<td width="30%"></td>
-		</tr>
-		<% @search_list.each do |user| %>
+
+<table width="250px" border="0" cellpadding="0" cellspacing="1">
+	<% if !@search_list.nil? %>
+		<% if @search_list.size > 0 %>
 			<tr>
-				<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %></td>
-				<td align="center"><%= link_to "Add Friend", friendships_path(:friend_id => user.id), :method => :post %></td>
+				<td width="70%"></td>
+				<td width="30%"></td>
+			</tr>
+			<% @search_list.each do |user| %>
+				<tr>
+					<td><%= user.username %> | <%= user.f_name %> | <%= user.l_name %></td>
+					<td align="center"><%= link_to "Add Friend", friendships_path(:friend_id => user.id), :method => :post %></td>
+				</tr>
+			<% end %>
+		<% else %>
+			<tr>
+				<td width="70%">No results</td>
+				<td width="30%"></td>
 			</tr>
 		<% end %>
-	</table>
 	<% else %>
-		No results
+		<tr>
+			<td width="70%">No results</td>
+			<td width="30%"></td>
+		</tr>
 	<% end%>
-<% end %>
+</table>
 </div>

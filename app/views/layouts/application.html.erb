@@ -29,14 +29,6 @@
 			<% end %>
 		</div>
 		<div class="clear"></div>
-		<div class="right">
-			<% if current_user %>
-				<%= form_tag :controller => 'users', :action => 'search' do %>
-	  				<%= text_field_tag :search, params[:search], :id => 'search_field', :placeholder => "Search for friends." %>
-	 				<%= submit_tag "Go", :name => nil %> 
-				<% end %> 
-			<% end %>
-		</div>
 	</div>
 	
 	<div id="content">
@@ -71,7 +63,25 @@
 		</div>
 	</div>
 	<div class="clear_container"></div>
-	<div id="footer"></div>
+	<div id="footer">
+		
+		<div class="left">
+			<% if current_user %>
+				<%= form_tag :controller => 'users', :action => 'search' do %>
+	  				<%= text_field_tag :search, params[:search], :id => 'search', :placeholder => "Search for friends." %>
+	 				<%= submit_tag "Go", :name => nil %> 
+				<% end %>
+			<% end %>
+		</div>
+		<div class="right">
+			<% if current_user %>
+				<%= form_tag :controller => 'events', :action => 'search' do %>
+	  				<%= text_field_tag :search_events, params[:search_events], :id => 'search_events', :placeholder => "Search for events." %>
+	 				<%= submit_tag "Go", :name => nil %> 
+				<% end %>
+			<% end %>
+		</div>
+	</div>
 </div>
 </body>
 </html>
