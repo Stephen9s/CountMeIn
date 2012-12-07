@@ -7,9 +7,9 @@ class MembershipsController < ApplicationController
     membership = event.memberships.build(:event_id => params[:event_id], :user_id => current_user.id, :owner_id => event.user_id)
     
     if membership.save
-      redirect_to events_index_path, :notice => "Event joined!"
+      redirect_to event_path(params[:id]), :notice => "Event joined!"
     else
-      redirect_to events_index_path, :notice => "Unable to join event!"
+      redirect_to events_path, :notice => "Unable to join event!"
       #render :action => 'new'
     end
   end
@@ -18,7 +18,7 @@ class MembershipsController < ApplicationController
     @membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:id])
     
     if @membership.destroy
-      redirect_to events_path, :notice => "You are out!"
+      redirect_to event_path(params[:id]), :notice => "You have left the event."
     else
       redirect_to events_path, :notice => "Can't go."
     end

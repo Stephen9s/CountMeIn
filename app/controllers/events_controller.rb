@@ -98,8 +98,9 @@ class EventsController < ApplicationController
       @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event], :order => "l_name ASC")
       
       friendship = current_user.friendships.find_by_friend_id(@event.user_id)
+      membership = current_user.memberships.find_by_user_id(current_user.id)
       
-      if @event.public == 0 && !friendship
+      if (@event.public == 0 && !friendship && !membership)
         redirect_to(:controller => 'sessions', :action => 'logout')
       else
         respond_to do |format|
@@ -112,10 +113,32 @@ class EventsController < ApplicationController
   end
   
   def search
+
     if params[:search_events] != ""
-      @results = Event.find(:all, :conditions => ['name || location LIKE ? and public = 1', "%#{params[:search_events.downcase]}%"])
-    end
-    
+      #@results = Event.find(:all, :conditions => ['name || location LIKE ?', "%#{params[:search_events.downcase]}%"])
+      friends = current_user.all_friends + current_user.all_inverse_friends
+      friends_id = Array.new
+      #friends_id << current_user.id
+      friends.each do |friend|
+        friends_id << friend.id
+      end
+      
+      # Finds ALL public events; friends or not.
+      if params[:search_events] == "?"
+        public_events = Event.find(:all, :conditions => ["public = 1"])
+      else
+        public_events = Event.find(:all, :conditions => ["public = 1 and (name || location LIKE ?)", "%#{params[:search_events.downcase]}%"])
+      end
+      
+      # Finds ALL private events; must be friends.
+      if params[:search_events] == "?"
+        @results = Event.find(:all, :conditions => [ "user_id IN (?) and public = 0",friends_id], :order => "updated_at DESC")
+      else
+        @results = Event.find(:all, :conditions => [ "user_id IN (?) and (name || location LIKE ?) and public = 0", friends_id, "%#{params[:search_events.downcase]}%"], :order => "updated_at DESC")
+      end
+      
+      @results = (@results + public_events).sort_by(&:updated_at)
+    end    
   end
   
   # lindsaar.net

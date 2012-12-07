@@ -15,18 +15,34 @@ class MessagesController < ApplicationController
   end
   
   def create
-    @message = Message.new(params[:message])
-    @message.sender_id = current_user.id
     
-    if @message.save
-      redirect_to inbox_path, :notice => "Message sent!"
-    else
-      redirect_to inbox_path, :notice => "Unable to send message!"
-      #render :action => 'new'
-    
-    render "inbox"
-    
+    if params[:message][:receiver_id] == ""
+      flash[:error_receiver] = "Receiver does not exist"
     end
+    
+    if params[:message][:subject] == ""
+      flash[:error_subject] = "Subject not present."
+    end
+    
+    if params[:message][:body] == ""
+      flash[:error_body] = "Body not present."
+    end
+    
+    if params[:message][:receiver_id] != ""
+      @message = Message.new(params[:message])
+      @message.sender_id = current_user.id
+      
+      if @message.save
+        redirect_to inbox_path, :notice => "Message sent!"
+      else
+        redirect_to inbox_new_path, :notice => "Unable to send message!"
+        #render :action => 'new'
+      end
+      
+    else
+      render "messages/new"
+    end
+        
   end
   
   def view

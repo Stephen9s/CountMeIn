@@ -15,8 +15,13 @@
 			<%= link_to "Home", home_path %>
 			<% if current_user %>
 				<% unread = Message.count(:all, :conditions => ["receiver_id = ? and read == 0", @current_user.id]) %>
+				<% pending_friends = (current_user.all_friends_requests + current_user.all_inverse_friends_requests).count %>
 				<%= link_to "Profile", profile_path %>
-				<%= link_to "Friends", friends_path %>
+				<% if pending_friends == 0 %>
+					<%= link_to "Friends", friends_path %>
+				<% else %>
+					<%= link_to "Friends (#{pending_friends})", friends_path %>
+				<% end %>
 				<%= link_to "View Events", events_path %>
 				<%= link_to "Post Events", post_path %>
 				<%= link_to "Agenda", agenda_path %>

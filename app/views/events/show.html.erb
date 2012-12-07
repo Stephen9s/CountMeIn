@@ -7,7 +7,7 @@
     	</tr>
     	<tr>
     		<td class="label">Start date:</td>
-    		<td class="input"><%= @event.start_date %></td>
+    		<td class="input"><%= link_to @event.start_date, agenda_path(:date => @event.start_date) %></td>
     	</tr>
     	<tr>
     		<td class="label">End date:</td>
