@@ -6,9 +6,11 @@ gem 'rails', '3.2.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-
+gem 'omniauth-google-oauth2'
 gem 'rake', '~> 10.0.2'
-
+gem 'nifty-generators'
+gem 'google-api-client', :require => 'google/api_client'
+gem 'omniauth', '1.1.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -45,3 +47,5 @@ gem "watu_table_builder", :require => "table_builder"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem "mocha", :group => :test

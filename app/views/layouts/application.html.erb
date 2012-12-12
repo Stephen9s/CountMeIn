@@ -43,7 +43,7 @@
 	 			<%= yield(:sidebar)  %>
 	 		<% else %>
 				<% if current_user %>
-					<% if @online_friends.size > 0 %>
+					<% if @online_friends && @online_friends.size > 0 %>
 						<table id="online">
 							<tr>
 								<td id="online_title"><b>Online</b></td>

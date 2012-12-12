@@ -1,9 +1,13 @@
 CountMeIn::Application.routes.draw do
   
   
+  resources :authentications
+  
   get "sessions/friends"
   post "sessions/loadEvent"
   get "sessions/loadEvent"
+  
+  match '/auth/:provider/callback' => 'authentications#create'
   
   resources :friendships
 

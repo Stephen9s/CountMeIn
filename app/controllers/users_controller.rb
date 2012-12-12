@@ -32,7 +32,6 @@ class UsersController < ApplicationController
       @search_list = User.find(:all, :select => 'id, username, f_name, l_name', :conditions => ['f_name || l_name || username LIKE ? and id != ?', "%#{params[:search.downcase]}%", current_user.id])
       @search_list = @search_list - friends - requests - waits
     end
-
   end
   
 end

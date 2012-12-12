@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
         has_many :events 
         has_many :memberships
         
+        has_many :authentications
+        
         # messages
         has_many :messages
         
