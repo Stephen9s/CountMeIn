@@ -11,15 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212000722) do
+ActiveRecord::Schema.define(:version => 20121214175448) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "cal_id"
     t.string   "uid"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "provider"
+    t.string   "token"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
   end
 
   create_table "events", :force => true do |t|
@@ -44,9 +47,10 @@ ActiveRecord::Schema.define(:version => 20121212000722) do
   create_table "memberships", :force => true do |t|
     t.integer  "event_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "owner_id"
+    t.string   "google_event_id"
   end
 
   create_table "messages", :force => true do |t|

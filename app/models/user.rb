@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
         has_many :events 
         has_many :memberships
         
-        has_many :authentications
+        has_one :authentications
         
         # messages
         has_many :messages

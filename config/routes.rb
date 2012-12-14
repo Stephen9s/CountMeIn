@@ -7,6 +7,8 @@ CountMeIn::Application.routes.draw do
   post "sessions/loadEvent"
   get "sessions/loadEvent"
   
+  post "authentications/add_event"
+  post "authentications/remove_event"
   match '/auth/:provider/callback' => 'authentications#create'
   
   resources :friendships
