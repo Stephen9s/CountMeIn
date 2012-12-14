@@ -21,7 +21,7 @@
 				    		<td class="input"><%= event.name %></td>
 				    		<td class="input"></td>
 				    		
-				    			<td class="input"><%= button_to 'Add to google cal', { :controller => "authentications", :action => "add_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
+				    			<td class="input"><%= button_to 'Add to google cal', { :controller => "authentications", :action => "add_event", :event_id => event.id }, :confirm => 'Are you sure?', :method => :post %></td>
 				    		
 				    			<td class="input"><%= button_to 'Remove from google cal', { :controller => "authentications", :action => "remove_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
 				    		
