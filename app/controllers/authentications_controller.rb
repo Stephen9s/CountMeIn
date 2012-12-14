@@ -42,18 +42,20 @@ class AuthenticationsController < ApplicationController
     @google = Authentication.find_by_user_id(current_user.id)
     
     
-    @event = Event.find_by_id(params[:event_id])
+    @event = Event.find_by_id(params[:id])
     
-    v = @event.start_date.to_formatted_s(:db)
-    x = @event.end_date.to_formatted_s(:db)
+    start_date = Date.parse((@event.start_date).to_s)
+    end_date = Date.parse((@event.end_date).to_s)
+    v = start_date.strftime('%Y-%m-%d')
+    x = end_date.strftime('%Y-%m-%d')
     to_post = {
-      'summary' => '#{@event.name}',
-      'location' => '#{@event.location}',
+      'summary' => @event.name,
+      'location' => @event.location,
       'start' => {
-        'date' => '#{v}'
+        'date' => v
         },
       'end' => {
-        'date' => '#{x}'
+        'date' => x
         }
       }
     string1 = '#{@event.name} + at + #{@event.location} + on + #{@event.start_date.to_datetime}'
@@ -68,7 +70,9 @@ class AuthenticationsController < ApplicationController
       :headers => {'Content-Type' => 'application/json'})
       
       
-      @membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:event_id])
+      membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:id])
+      membership.google_event_id = @result.data.id
+      membership.save
       
   end
   
@@ -78,8 +82,8 @@ class AuthenticationsController < ApplicationController
   
   def remove_event
     @google = Authentication.find_by_user_id(current_user.id)
-    @event = Event.find_by_id(params[:event_id])
-    @membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:event_id])
+    @event = Event.find_by_id(params[:id])
+    membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:id])
     
     client = Google::APIClient.new
     client.authorization.access_token = @google.token
