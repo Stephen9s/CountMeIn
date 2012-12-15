@@ -9,20 +9,22 @@ class AuthenticationsController < ApplicationController
     @authentication.refresh_token = @auth['credentials']['refresh_token']
     @authentication.expires_at = Time.at(@auth['credentials']["expires_at"].to_f).to_datetime - 30.seconds
     @authentication.save
-    
-    
       
-      @token = @auth["credentials"]["token"]
-      client = Google::APIClient.new
-      client.authorization.access_token = @token
-      service = client.discovered_api('calendar', 'v3')
-      @result = client.execute(
+    @token = @auth["credentials"]["token"]
+    client = Google::APIClient.new
+    client.authorization.access_token = @token
+    service = client.discovered_api('calendar', 'v3')
+    
+    @result = client.execute(
         :api_method => service.calendars.insert,
         :body_object => {'summary' => 'Count me in!'},
-        :headers => {'Content-Type' => 'application/json'}) 
-      
+        :headers => {'Content-Type' => 'application/json'})
+        
+    if @authentication.cal_id == nil 
       @authentication.cal_id = @result.data.id.to_s
-      @authentication.save
+    end
+    
+    @authentication.save
   end
   
   def have_cal
@@ -93,8 +95,13 @@ class AuthenticationsController < ApplicationController
       :parameters => {'calendarId' => @google.cal_id, 'eventId' => membership.google_event_id},
       :headers => {'Content-Type' => 'application/json'})
       
+      if @result
+        membership.google_event_id = ""
+        membership.save
+      end
+      
       respond_to do |format|
-        format.html { redirect_to events_index_path, :notice => "Event removed from google cal!"}
+        format.html { redirect_to events_index_path, :notice => "Event removed from Google Calendar!"}
         format.xml  { head :no_content }
       end
   end

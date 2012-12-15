@@ -96,7 +96,8 @@ class EventsController < ApplicationController
     else
       @event = Event.find(params[:id])
       @event_memberships = User.find(:all, :select => "f_name, l_name, user_id", :joins => [:memberships], :conditions => ["memberships.event_id = ? AND users.id = memberships.user_id", @event], :order => "l_name ASC")
-      
+      @verify_auth_token_date = Authentication.find_by_user_id(current_user.id, :select => "expires_at")
+      @google_id = Membership.find_by_user_id_and_event_id(current_user.id, params[:id], :select => "google_event_id")
       friendship = current_user.friendships.find_by_friend_id(@event.user_id)
       membership = current_user.memberships.find_by_user_id(current_user.id)
       

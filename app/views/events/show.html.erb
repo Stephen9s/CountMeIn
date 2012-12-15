@@ -17,7 +17,25 @@
     		<td class="label">Public?</td>
     		<td class="input"><% if @event.public == 1%>Yes<%else%>No<% end %></td>
     	</tr>
-    	<% if current_user %>
+    	<% if current_user %>    	
+    	<tr>
+			<% if !@verify_auth_token_date %>
+				<td class="label"></td>
+				<td class="input"></td>
+			<% elsif @verify_auth_token_date.expires_at.nil? || @verify_auth_token_date.expires_at.past? %>
+				<td class="label"></td>
+				<td class="input"></td>
+			<% else %>
+				<td class="label">Google Cal:</td>
+				<td class="input">
+					<% if @google_id.google_event_id == "" %>
+						<%= button_to 'Add to Google Calendar', { :controller => "authentications", :action => "add_event", :id => @event }, :confirm => 'Are you sure?', :method => :post %>
+					<% else %>
+						<%= button_to 'Remove from Google Calendar', { :controller => "authentications", :action => "remove_event", :id => @event }, :confirm => 'Are you sure?', :method => :post %>
+					<% end %>
+				</td>
+			<% end%>
+		</tr>
     	<tr>
 			<% if @event.user_id.equal?(current_user.id) %>
 				<td class="input"><%= button_to 'Modify', { :controller => "events", :action => "edit", :id => @event }, :method => :put  %></td>

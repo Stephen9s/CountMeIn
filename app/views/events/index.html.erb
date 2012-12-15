@@ -19,12 +19,7 @@
 			          	<tr>
 			          		<td class="label">Name:</td>
 				    		<td class="input"><%= event.name %></td>
-				    		<td class="input"></td>
-				    		
-				    			<td class="input"><%= button_to 'Add to google cal', { :controller => "authentications", :action => "add_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
-				    		
-				    			<td class="input"><%= button_to 'Remove from google cal', { :controller => "authentications", :action => "remove_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
-				    		
+				    		<td class="input"></td>			    		
 				    			
 				    		<% if event.user_id.equal?(current_user.id) %>
 				    			<td class="input"><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => event }, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -45,9 +40,7 @@
 			  				<% else %>
 			  					<td class="input"><%= link_to "Count Me In!", join_path(:event_id => event.id), :method => :post %></td>
 			  				<% end %>
-			  				Test by puting them in:
-			  				<td class="input"><%= button_to 'Add to google cal', { :controller => "authentications", :action => "add_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
-				    		<td class="input"><%= button_to 'Remove from google cal', { :controller => "authentications", :action => "remove_event", :id => event }, :confirm => 'Are you sure?', :method => :post %></td>
+			  				
 				    	</tr>
 		    			<% end %>
 		    		<% end %>
