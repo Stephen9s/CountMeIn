@@ -28,7 +28,7 @@
 			<% else %>
 				<td class="label">Google Cal:</td>
 				<td class="input">
-					<% if @google_id.google_event_id == "" %>
+					<% if @google_id.google_event_id == "" || @google_id.google_event_id.nil? %>
 						<%= button_to 'Add to Google Calendar', { :controller => "authentications", :action => "add_event", :id => @event }, :confirm => 'Are you sure?', :method => :post %>
 					<% else %>
 						<%= button_to 'Remove from Google Calendar', { :controller => "authentications", :action => "remove_event", :id => @event }, :confirm => 'Are you sure?', :method => :post %>

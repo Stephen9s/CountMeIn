@@ -18,7 +18,7 @@
 			          <% if event.start_date < Date.today %>
 			          	<tr>
 			          		<td class="label">Name:</td>
-				    		<td class="input"><%= event.name %></td>
+				    		<td class="input"><%= link_to event.name, :controller => "events", :action => "show", :id => event.id %></td>
 				    		<td class="input"></td>			    		
 				    			
 				    		<% if event.user_id.equal?(current_user.id) %>

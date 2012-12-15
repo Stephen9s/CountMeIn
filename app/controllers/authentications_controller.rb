@@ -15,16 +15,17 @@ class AuthenticationsController < ApplicationController
     client.authorization.access_token = @token
     service = client.discovered_api('calendar', 'v3')
     
-    @result = client.execute(
+    if @authentication.cal_id == "" || @authentication.cal_id.nil?
+      @result = client.execute(
         :api_method => service.calendars.insert,
         :body_object => {'summary' => 'Count me in!'},
-        :headers => {'Content-Type' => 'application/json'})
-        
-    if @authentication.cal_id == nil 
+        :headers => {'Content-Type' => 'application/json'}) 
       @authentication.cal_id = @result.data.id.to_s
     end
     
     @authentication.save
+    
+    redirect_to profile_path, :notice => "Successfully logged in to Google!"
   end
   
   def have_cal
