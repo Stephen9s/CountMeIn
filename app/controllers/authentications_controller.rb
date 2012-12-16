@@ -75,7 +75,12 @@ class AuthenticationsController < ApplicationController
       
       membership = Membership.find_by_user_id_and_event_id(current_user.id, params[:id])
       membership.google_event_id = @result.data.id
-      membership.save
+    
+    if membership.save && @result
+      redirect_to show_event_path(params[:id]), :notice => "Event added to your Google Cal!"
+    else
+      redirect_to show_event_path(params[:id]), :notice => "Error adding to Google Cal!"
+    end
       
   end
   
@@ -95,15 +100,14 @@ class AuthenticationsController < ApplicationController
       :api_method => service.events.delete,
       :parameters => {'calendarId' => @google.cal_id, 'eventId' => membership.google_event_id},
       :headers => {'Content-Type' => 'application/json'})
+    
+    membership.google_event_id = ""
+    
+    if membership.save && @result
+      redirect_to show_event_path(params[:id]), :notice => "Event removed from your Google Cal!"
+    else
+      redirect_to show_event_path(params[:id]), :notice => "Error removing event from Google Cal!"
+    end
       
-      if @result
-        membership.google_event_id = ""
-        membership.save
-      end
-      
-      respond_to do |format|
-        format.html { redirect_to events_index_path, :notice => "Event removed from Google Calendar!"}
-        format.xml  { head :no_content }
-      end
   end
 end

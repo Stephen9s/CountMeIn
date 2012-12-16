@@ -30,7 +30,7 @@
 				<% else %>
 					<td id="not_read">
 				<% end %>
-					<%= link_to "View Message", {:action => 'view', :message => message }, :method => :post %>
+					<%= link_to "View Message", {:action => 'view', :message => message }, :method => :post %> | <%= link_to "Delete?", {:action => 'destroy', :message => message}, :method => :post %>
 				</td>
 			</tr>
 		</table>
@@ -57,7 +57,7 @@
 			</tr>
 			<tr>
 				<td id="type">
-					<%= link_to "View Message", inbox_path %>
+					<%= link_to "View Message", {:action => 'view', :message => message }, :method => :post %>
 				</td>
 			</tr>
 		</table>

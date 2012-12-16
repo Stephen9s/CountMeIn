@@ -63,8 +63,20 @@ body {
     padding: 0px 0px 20px 12px;
     background: #fff;
     width: 70%;
+    min-height: 100%;    
+}
+
+#bigmain {
+    float: left;
+    padding: 0px 0px 20px 12px;
+    background: #fff;
+    width: 97%;
     min-height: 100%;
-    
+}
+
+#bigmain h3 {
+  font-size: 14px;
+  font-weight: normal;
 }
 
 #main h3 {
@@ -83,6 +95,7 @@ body {
     border-left-style: dotted;
     border-color: gray;
     min-height: 100%;
+    visibility: visible;
 }
 
 #menu, .left {

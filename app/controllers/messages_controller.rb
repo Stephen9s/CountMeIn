@@ -66,4 +66,22 @@ class MessagesController < ApplicationController
     
   end
   
+  def destroy
+    
+    if Message.exists?(params[:message])
+      
+      message = Message.find(params[:message])
+      
+      if current_user.id == message.receiver_id
+        message.destroy
+        redirect_to inbox_path, :notice => "Message deleted!"
+      else
+        redirect_to inbox_path, :notice => "Failed to delete message!"
+      end    
+    else
+        redirect_to inbox_path, :notice => "Message does not exist!"
+    end
+    
+  end
+  
 end
