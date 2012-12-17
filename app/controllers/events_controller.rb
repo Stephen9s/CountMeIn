@@ -43,7 +43,7 @@ class EventsController < ApplicationController
         format.xml  { head :no_content }
       end
     else
-      redirect_to events_index_path, :notice => "Event update failed!"
+      redirect_to edit_event_path(event), :notice => "Event update failed!"
     end
   end
 

@@ -52,7 +52,7 @@ CountMeIn::Application.routes.draw do
   match "events", :to => "events#index", :as => "events"
   match "post" => "events#new"
   match "/events/:id" => "events#show", :as => "show_event"
-  put "/events/:id/edit", :to => "events#edit"
+  put "/events/:id/edit", :to => "events#edit", :as => "edit_event"
   post "events/create"
   post "/events/:id", :to => "events#update"
   #put "events", :to => "events#edit"

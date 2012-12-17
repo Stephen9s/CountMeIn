@@ -1,19 +1,39 @@
-<h1>Edit Event</h1>
-
-
-<%= link_to "View events", :controller => 'events', :action => 'index' %>
+<% if flash[:notice] %>
+  <p class="notice">
+  	<%= flash[:notice] %>
+  </p>
+<% end %>
+<h1 align="center">Editing...<br>"<%= @event.name %>"</h1>
+<div align="center">
 	<%= form_for(:event, :url => {:controller => 'events', :action => 'update'}, :method => :put ) do |f| %>
 		<%= f.hidden_field :id %>
-		<p>Event Name: <%= f.text_field :name %></p>
-		<p>Location: <%= f.text_field :location %></p>
-		<p>Make Public: <%= f.check_box(:public) %></p>
-		<%= f.submit %>
+		<table>
+			<tr>
+	    		<td class="label">Event Name:</td>
+	    		<td class="input"><%= f.text_field :name %></td>
+	    	</tr> 
+	    	<tr>
+	    		<td class="label">Location:</td>
+	    		<td class="input"><%= f.text_field :location %></td>
+	    	</tr>   		
+	    	<tr>
+	    		<td class="label">Public?</td>
+	    		<td class="input"><%= f.check_box(:public) %></td>
+	    	</tr>
+			<tr>
+				<td class="label"><%= f.submit %></td>
+	    		<td class="input"></td>
+			</tr>
+		</table>
 	<% end %>
+</div>
+<br><br>
+<%= link_to "View events", :controller => 'events', :action => 'index' %>
 
-	<% if @event.errors.any? %>
-		<ul class="new_event_errors">
-			<% for message_error in @event.errors.full_messages %>
-			<li>* <%= message_error %></li>
-			<% end %>
-		</ul>
-	<% end %>
+<% if @event.errors.any? %>
+	<ul class="new_event_errors">
+		<% for message_error in @event.errors.full_messages %>
+		<li>* <%= message_error %></li>
+		<% end %>
+	</ul>
+<% end %>
