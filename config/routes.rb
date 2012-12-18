@@ -9,6 +9,7 @@ CountMeIn::Application.routes.draw do
   
   post "authentications/add_event"
   post "authentications/remove_event"
+  post "authentications/destroy_session"
   match '/auth/:provider/callback' => 'authentications#create'
   
   resources :friendships
@@ -79,6 +80,7 @@ CountMeIn::Application.routes.draw do
   post "inbox/view"
   post "/inbox/:message/destroy" => "messages#destroy"
   
+  match "profile" => "sessions#profile"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

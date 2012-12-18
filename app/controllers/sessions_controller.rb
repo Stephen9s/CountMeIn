@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
     end
     
     begin
-      @events = Event.find(:all, :conditions => [ "user_id IN (?)", friends_id], :order => "updated_at DESC")
+      @events = Event.find(:all, :conditions => [ "user_id IN (?) and end_date >= ?", friends_id, Date.today], :order => "updated_at DESC")
     rescue ActiveRecord::RecordNotFound
       @events = []
     end
@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   end
 
   def profile
-    @profile = User.find(session[:user_id], :select => "username, email, f_name, l_name, mobile_phone, dob, gender, description, email", :limit => 1)
+    @profile = User.find(current_user.id, :select => "username, email, f_name, l_name, mobile_phone, dob, gender, description, email", :limit => 1)
     @verify_auth_token_date = Authentication.find_by_user_id(current_user.id, :select => "expires_at")
   end
 

@@ -88,6 +88,15 @@ class AuthenticationsController < ApplicationController
     @result = :result
   end
   
+  def destroy_session
+    google = Authentication.find_by_user_id(current_user.id) 
+    google.expires_at = ""
+    
+    if google.save
+      redirect_to profile_path, :notice => "You are no longer logged into Google!"
+    end
+  end
+  
   def remove_event
     @google = Authentication.find_by_user_id(current_user.id)
     @event = Event.find_by_id(params[:id])

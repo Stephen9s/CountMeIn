@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     
     if @user.save
-      flash[:notice] = "Username successfull created!"
+      flash[:notice] = "Username successfully created!"
       flash[:color] = "valid"
       
       # if created, then don't ask them to create another one...

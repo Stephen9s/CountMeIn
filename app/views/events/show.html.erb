@@ -36,7 +36,7 @@
 					<% elsif @verify_auth_token_date.expires_at.nil? || @verify_auth_token_date.expires_at.past? %>
 						<td class="label"></td>
 						<td class="input"></td>
-					<% else %>
+					<% elsif @event.end_date >= Date.today %>
 						<td class="label">Google Cal:</td>
 						<td class="input">
 							<% if @google_id && (@google_id.google_event_id.nil? || @google_id.google_event_id == "") %>
@@ -48,7 +48,11 @@
 					<% end%>
 				</tr>
 				<tr>
-					<td class="input"><%= button_to 'Modify', { :controller => "events", :action => "edit", :id => @event }, :method => :put  %></td>
+					<td class="input">
+						<% if  @event.end_date >= Date.today %>
+							<%= button_to 'Modify', { :controller => "events", :action => "edit", :id => @event }, :method => :put  %>
+						<% end %>
+					</td>
 				    <td class="input"><%= button_to 'Destroy', { :controller => "events", :action => "destroy", :id => @event }, :confirm => 'Are you sure?', :method => :delete %></td>
 				</tr>
 			<% elsif @event.memberships.find(:all, :conditions => ['user_id = ?', current_user.id]).size == 1 %>

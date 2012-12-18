@@ -14,8 +14,7 @@
 		<% if @p_event.size > 0 %>
 				<table>
 				<% @p_event.each do |event| %>
-			    	<% if event.end_date > Date.today %>
-			          <% if event.start_date < Date.today %>
+			          <% if event.end_date < Date.today %>
 			          	<tr>
 			          		<td class="label">Name:</td>
 				    		<td class="input"><%= link_to event.name, :controller => "events", :action => "show", :id => event.id %></td>
@@ -44,7 +43,6 @@
 				    	</tr>
 		    			<% end %>
 		    		<% end %>
-		    	<% end %>
 		    	</table>
 		<% else %>
 			<table>
