@@ -128,14 +128,14 @@ class EventsController < ApplicationController
       if params[:search_events] == "?"
         public_events = Event.find(:all, :conditions => ["public = 1"])
       else
-        public_events = Event.find(:all, :conditions => ["public = 1 and (name || location LIKE ?)", "%#{params[:search_events.downcase]}%"])
+        public_events = Event.find(:all, :conditions => ["public = 1 and (name || location LIKE ?) and end_date < ?", "%#{params[:search_events.downcase]}%", Date.today])
       end
       
       # Finds ALL private events; must be friends.
       if params[:search_events] == "?"
         @results = Event.find(:all, :conditions => [ "user_id IN (?) and public = 0",friends_id], :order => "updated_at DESC")
       else
-        @results = Event.find(:all, :conditions => [ "user_id IN (?) and (name || location LIKE ?) and public = 0", friends_id, "%#{params[:search_events.downcase]}%"], :order => "updated_at DESC")
+        @results = Event.find(:all, :conditions => [ "user_id IN (?) and (name || location LIKE ?) and public = 0 and end_date < ?", friends_id, "%#{params[:search_events.downcase]}%", Date.today], :order => "updated_at DESC")
       end
       
       @results = (@results + public_events).sort_by(&:updated_at)
